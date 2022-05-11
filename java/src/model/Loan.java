@@ -1,8 +1,9 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Random;
 
 public class Loan {
 
@@ -17,17 +18,17 @@ public class Loan {
 
     }
 
-    public Loan(int membersID, Book [] booksToBorrow) {   //Tänker att man endast behöver detta för att göra ett lån resten sker med automatik.
 
-        LocalDate today = LocalDate.now();  //Kan vi använda LocalDate istället? Verkar mycket smidigare att jobba med!
-        int todayAsInt = today.getYear() + today.getMonthValue() + today.getDayOfMonth();
+    public Loan(int membersID, List<Book> booksToBorrow) {   //Tänker att man endast behöver detta för att göra ett lån resten sker med automatik.
 
-        this.loanID = membersID + todayAsInt;     //Kanske kan göras enklare men borde fungera OK.
+        LocalDate today = LocalDate.now();
+
+        this.loanID = createLoanID(membersID);
         this.memberID = membersID;
         this.startDate = today;
         this.endDate = today.plusDays(15);
         this.overdue = false;
-        this.borrowedBooks = Arrays.stream(booksToBorrow).toList(); //Ändrade till en Book [] istället för att det kanske är lättare at jobba med men att det sedan lagras som en List<Book> i själva klassen.
+        this.borrowedBooks = booksToBorrow;
 
     }
 
@@ -35,17 +36,27 @@ public class Loan {
         return loanID;
     }
 
-    public void setLoanID(int loanID) {
-        this.loanID = loanID;
+    public int createLoanID (int membersID) {
+        //Skapar ett unikt loanID med hjälp av medlemmens ID + lånetillfällets specifika nanosekunder som avrundas till de fyra första siffrorna (for loopen).
+
+        LocalTime time = LocalTime.now();
+        String nanoStr = String.valueOf(time.getNano());
+        StringBuilder uniqueID = new StringBuilder();
+
+        for (int i = 0; i < 4; i++) {
+            uniqueID.append(nanoStr.charAt(i));
+        }
+
+        return Integer.parseInt(membersID + String.valueOf(uniqueID));
     }
 
-    public Book [] getBooks() {
-        Book [] allBorrowedBooks =  new Book[borrowedBooks.size()];
-        return borrowedBooks.toArray(allBorrowedBooks);
+
+    public List<Book> getBooks() {
+        return borrowedBooks;
     }
 
-    public void setBooks(Book [] booksToBorrow) {
-        this.borrowedBooks = Arrays.stream(booksToBorrow).toList();
+    public void setBooks(List<Book> booksToBorrow) {
+        this.borrowedBooks = booksToBorrow;
     }
 
     public LocalDate getStartDate() {
@@ -54,7 +65,6 @@ public class Loan {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-
     }
 
     public LocalDate getEndDate() {

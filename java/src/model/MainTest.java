@@ -12,18 +12,28 @@ public class MainTest {
 
 
 
-        /*------------------------------------loanID-------------------------------------------------------*/
+        /*------------------------------------getLoanID()-------------------------------------------------------*/
 
         //Här är ett test för att se hur ett loanID kan se ut.
         //Det kommer skapas automatisk och innehåller memberID och en unik kod på 4 siffror som genereras i samma stund som lånet genomförs.
-        Book enBok = new Book();
-        List<Book> borrowing = new ArrayList<>();
-        Loan aLoan = new Loan(3008, borrowing);
 
-        System.out.println("Unikt loanID: " + aLoan.getLoanID());
+        int [] intBorrowing = new int [] {112233, 445566, 778899};
+        Loan aLoan = new Loan(2008, intBorrowing);
+
+        System.out.println("LoanID: " + aLoan.getLoanID());
 
 
 
+
+        /*------------------------------------getBooks()-------------------------------------------------------*/
+
+        //Här är ett exempel på hur man kan hämta alla böcker som finns i ett specifikt lån.
+
+        int [] borrowedBooks = aLoan.getBooks();
+
+        for (int nr : borrowedBooks) {
+            System.out.println("ISBN nr: " + nr);
+        }
 
 
 

@@ -38,14 +38,15 @@ public class LoanService implements ILoanService {
         Loan [] allLoans;
         int numberOfLoans = 0;
 
-        //Conect to the database,
-        //numberOfLoans = COUNT number of rows.
+        //1. Connect to the database
+
+        //2. SQL statement that count all loans.
+        //numberOfLoans = result.getInt(1);
         allLoans = new Loan [numberOfLoans];
 
-        //for loop that adds all the loans and its information to the "allLoans" array.
-        for (int i = 0; i < numberOfLoans; i++) {
-           // Loan newLoan =
-        }
+        //3. SQL statement that gets all loans in the database.
+
+        //4. A while loop that instantiate all loans and inserts them in "allLoans" array.
 
 
         return allLoans;

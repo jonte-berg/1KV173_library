@@ -4,6 +4,10 @@ import java.util.List;
 
 public class LoanManager implements ILoanManager{
 
+    LoanService service = null;
+    public LoanManager(LoanService aService) { service = aService; }
+
+
     @Override
     public boolean searchForBookISBN(int isbnNr) {
         return false;

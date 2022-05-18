@@ -39,18 +39,3 @@ book_ISBN int,
 CONSTRAINT fk_loan_hasBook FOREIGN KEY (loanID) REFERENCES Loan(LoanID),
 CONSTRAINT fk_book_hasBook FOREIGN KEY (book_ISBN) REFERENCES Book(isbn)
 );
-
-INSERT INTO Member
-VALUES (1234, 'Dennis', 'Schill', false, 3, 0);
-
-INSERT INTO Member
-VALUES (1334, 'Robin', 'Sjöberg', false, 3, 0);
-
-INSERT INTO Member
-VALUES (1434, 'Jonathan', 'Berg', false, 3, 0);
-
-INSERT INTO Member
-VALUES (1534, 'Kostas', 'Konstantinos', false, 3, 0);
-
-ALTER TABLE member
-MODIFY COLUMN suspended INT;

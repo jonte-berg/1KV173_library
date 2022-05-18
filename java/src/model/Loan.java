@@ -9,7 +9,7 @@ public class Loan {
 
     private int loanID;
     private int memberID;
-    private List<Book> borrowedBooks; //Eftersom vi endast ska söka med hjälp av ISBN nummer så kanske vi ska jobba med List<Integer> istället för List<Books>?
+    private List<Book> borrowedBooks;
     private LocalDate startDate;
     private LocalDate endDate;
     private Boolean overdue;

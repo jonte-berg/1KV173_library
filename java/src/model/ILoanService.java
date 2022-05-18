@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface ILoanService {
     @return Loan[]
      */
 
-    Loan [] getLoanByMember(int membersID);
+    Loan [] getLoanByMember(int membersID) throws SQLException;
 
 
 

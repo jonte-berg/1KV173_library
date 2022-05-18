@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="java" options="--add-modules java.base" />
-    </option>
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="1KV173_library" target="" />
+      <module name="java" target="" />
+    </bytecodeTargetLevel>
   </component>
 </project>

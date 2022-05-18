@@ -9,7 +9,7 @@ public class Loan {
 
     private int loanID;
     private int memberID;
-    private List<Integer> borrowedBooks; //Eftersom vi endast ska söka med hjälp av ISBN nummer så kanske vi ska jobba med List<Integer> istället för List<Books>?
+    private List<Book> borrowedBooks; //Eftersom vi endast ska söka med hjälp av ISBN nummer så kanske vi ska jobba med List<Integer> istället för List<Books>?
     private LocalDate startDate;
     private LocalDate endDate;
     private Boolean overdue;
@@ -20,7 +20,7 @@ public class Loan {
 
 
 
-    public Loan(int membersID, List<Integer> booksToBorrow) {   //Tänker att man endast behöver detta för att göra ett lån resten sker med automatik.
+    public Loan(int membersID, List<Book> booksToBorrow) {   //Tänker att man endast behöver detta för att göra ett lån resten sker med automatik.
 
         LocalDate today = LocalDate.now();
 
@@ -52,11 +52,11 @@ public class Loan {
     }
 
 
-    public List<Integer> getBooks() {
+    public List<Book> getBooks() {
         return borrowedBooks;
     }
 
-    public void setBooks(List<Integer> booksToBorrow) {
+    public void setBooks(List<Book> booksToBorrow) {
         this.borrowedBooks = booksToBorrow;
     }
 

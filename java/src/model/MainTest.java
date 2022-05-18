@@ -17,10 +17,9 @@ public class MainTest {
         //Här är ett test för att se hur ett loanID kan se ut.
         //Det kommer skapas automatisk och innehåller memberID och en unik kod på 4 siffror som genereras i samma stund som lånet genomförs.
 
-        List<Integer> borrowing =  new ArrayList<>();
-        borrowing.add(112233);
-        borrowing.add(445566);
-        borrowing.add(778899);
+        List<Book> borrowing =  new ArrayList<>();
+        Book bok1 = new Book(112233, "Sagan om ringen", "Äventyr", 10,true);
+        borrowing.add(bok1);
 
         Loan aLoan = new Loan(2008, borrowing);
 
@@ -33,10 +32,15 @@ public class MainTest {
 
         //Här är ett exempel på hur man kan hämta alla böcker som finns i ett specifikt lån.
 
-        List<Integer> borrowedBooks = aLoan.getBooks();
+        Book bok2 = new Book(445566, "Hobbit", "Äventyr", 5,true);
+        Book bok3 = new Book(778899, "Elon Musk", "Biografi", 10,true);
+        borrowing.add(bok2);
+        borrowing.add(bok3);
 
-        for (int nr : borrowedBooks) {
-            System.out.println("ISBN nr: " + nr);
+        List<Book> borrowedBooks = aLoan.getBooks();
+
+        for (Book b : borrowedBooks) {
+            System.out.println("ISBN nr: " + b.getIsbn());
         }
 
 

@@ -19,7 +19,20 @@ public interface ILoanManager {
     @return boolean (true if book is available > 0. false if not available (don't exist or available < 1)
      */
 
-    boolean searchForBook(int ISBNnr);
+    boolean searchForBookISBN(int isbnNr);
+
+
+
+
+        /*
+    Search for a book in the database with the help of the Title.
+    @para ISBN nr
+    @return boolean (true if book is available > 0. false if not available (don't exist or available < 1)
+    Förbättringsförslag som vi kanske kan ta med i rapporten (returenera int istället, 1 = är tillgänglig, 0 = finns men ej tillgänglig och -1 = finns inte).
+     */
+
+    boolean searchForBookTitle(String title);
+
 
 
 
@@ -30,12 +43,18 @@ public interface ILoanManager {
     @return boolean (true if the loan has been added. false if it didn't go through).
     */
 
-    boolean addLoan(int membersID, int [] books);
+    boolean addLoan(int membersID, List<Integer> books);
+
 
 
 
     /*
     Delete a loan with a specifik loanID.
+    1. Update books.
+    2. Update member.
+    3. If loan is overdue -> issueFine -> getWarnings ->
+            if warnings = 2 -> suspendMember()
+            if warnings = 4 -> deleteMember()
     @para loanID
     @return boolean (true if the loan has been deleted. false if it didn't go through).
     */
@@ -43,7 +62,8 @@ public interface ILoanManager {
     boolean deleteLoan(int loanID);
 
 
+    void loanItems();
 
-    //Fortsätt med att lägga till resterande.
 
+    void issueFine(int membersID);
 }

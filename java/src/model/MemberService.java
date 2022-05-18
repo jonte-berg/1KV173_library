@@ -1,13 +1,34 @@
 package model;
 
+import java.sql.*;
+import java.util.ArrayList;
+
 public class MemberService implements IMemberService {
 
     @Override
-    public Member[] getAllMembers() {
+    public ArrayList<Member>  getAllMembers() {
 
-        /* Code that retrieves from database */
+        ArrayList<Member> allMembers = new ArrayList<>();
 
-        return new Member[0];
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true", "gruppD", "Q1w2e3r4t5")) {
+            System.out.println("Connected\n");
+
+            Statement statement = conn.createStatement();
+
+            ResultSet result = statement.executeQuery("SELECT * FROM Member");
+
+            while (result.next()) {
+                Member member = new Member(result.getInt("memberID"), result.getString("sName"), result.getString("lName"), result.getInt("suspended"), result.getInt("maxLoans"), result.getInt("total_Warnings"));
+                allMembers.add(member);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong...");
+        }
+
+        return allMembers;
+
     }
 
     @Override

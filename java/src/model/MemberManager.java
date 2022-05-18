@@ -3,6 +3,16 @@ package model;
 import java.time.LocalDate;
 
 public class MemberManager implements IMemberManager {
+
+    MemberService service = null;
+
+    public MemberManager(MemberService service) {
+        this.service = service;
+    }
+
+    public MemberManager() {
+    }
+
     @Override
     public boolean addMember(Member newMember) {
         return false;

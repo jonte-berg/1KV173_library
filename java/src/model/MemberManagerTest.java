@@ -5,16 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.*;
 
 class MemberManagerTest {
 
-   /* MemberService memberService = mock(MemberService.class); */
+    MemberService memberService = mock(MemberService.class);
     MemberManager mg = new MemberManager();
 
     @BeforeEach
     void setUp() {
         System.out.println("Setting it up! ....");
-        /* mg = new MemberManager(memberService); */
+         mg = new MemberManager(memberService);
     }
 
     @AfterEach

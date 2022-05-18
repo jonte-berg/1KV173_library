@@ -1,0 +1,41 @@
+CREATE TABLE Member (
+memberID INT PRIMARY KEY,
+sName VARCHAR(45),
+lName VARCHAR(45),
+suspended boolean,
+maxLoans INT,
+total_Warnings INT
+);
+
+CREATE TABLE Loan (
+loanID INT PRIMARY KEY,
+title VARCHAR(100),
+startDate datetime,
+endDate datetime,
+overdue boolean
+);
+
+CREATE TABLE Book (
+isbn INT PRIMARY KEY,
+title VARCHAR(100),
+genre VARCHAR(45),
+quantity_total int,
+quantity_left int,
+isAvailable boolean
+);
+
+CREATE TABLE hasLoan (
+memberID int,
+loanID int,
+
+CONSTRAINT fk_member_hasLoan FOREIGN KEY (memberID) REFERENCES Member(memberID),
+CONSTRAINT fk_loan_hasLoan FOREIGN KEY (loanID) REFERENCES Loan(loanID)
+);
+
+CREATE TABLE hasBook (
+loanID int,
+book_ISBN int,
+
+CONSTRAINT fk_loan_hasBook FOREIGN KEY (loanID) REFERENCES Loan(LoanID),
+CONSTRAINT fk_book_hasBook FOREIGN KEY (book_ISBN) REFERENCES Book(isbn)
+);

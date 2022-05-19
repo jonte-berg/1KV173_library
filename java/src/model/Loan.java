@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ public class Loan {
     private List<Book> borrowedBooks;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Boolean overdue;
+    private int overdue;
 
     public Loan() {
 
@@ -20,7 +21,7 @@ public class Loan {
 
 
 
-    public Loan(int membersID, List<Book> booksToBorrow) {   //Tänker att man endast behöver detta för att göra ett lån resten sker med automatik.
+    public Loan(int membersID, List<Book> booksToBorrow) {   //SKAPA ETT NYTT LÅN
 
         LocalDate today = LocalDate.now();
 
@@ -28,10 +29,23 @@ public class Loan {
         this.memberID = membersID;
         this.startDate = today;
         this.endDate = today.plusDays(15);
-        this.overdue = false;
+        this.overdue = 0;
         this.borrowedBooks = booksToBorrow;
 
     }
+
+
+    public Loan(int theLoanID, int membersID, LocalDate theStartDate, LocalDate theEndDate, int isOverdue) {   //LÄS IN LÅN FRÅN DB
+
+        this.loanID = theLoanID;
+        this.memberID = membersID;
+        this.startDate = theStartDate;
+        this.endDate = theEndDate;
+        this.overdue = isOverdue;
+
+
+    }
+
 
     public int getLoanID() {
         return loanID;
@@ -84,12 +98,12 @@ public class Loan {
         this.memberID = memberID;
     }
 
-    public Boolean getOverdue() {
+    public int getOverdue() {
         return overdue;
     }
 
-    public void setOverdue(Boolean overdue) {
-        this.overdue = overdue;
+    public void setOverdue(int overdueStatus) {
+        this.overdue = overdueStatus;
     }
 
 }

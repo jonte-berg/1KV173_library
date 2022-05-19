@@ -11,7 +11,13 @@ public class MainTest {
 
     public static void main(String[] args) throws SQLException {
 
+        /*------------------------------------getallMembers()-------------------------------------------------------*/
 
+        MemberService newServ = new MemberService();
+
+        for (Member memb : newServ.getAllMembers()) {
+            System.out.print(memb);
+        }              /* Ej klart */
 
         /*------------------------------------getLoanID()-------------------------------------------------------*/
 

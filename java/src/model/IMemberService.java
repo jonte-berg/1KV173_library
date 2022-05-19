@@ -1,6 +1,7 @@
 package model;
 
 
+import java.util.ArrayList;
 
 public interface IMemberService {
 
@@ -10,7 +11,7 @@ public interface IMemberService {
      * @return Member[]
      */
 
-    Member[] getAllMembers();
+    ArrayList<Member>  getAllMembers();
 
     /**
      * Get specific member by ID

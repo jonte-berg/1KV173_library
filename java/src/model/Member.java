@@ -8,18 +8,27 @@ public class Member {
     String sName;
     String lName;
     List<Loan> loans;
-    boolean suspended;
+    int suspended;
     int maxLoans;
     int warnings;
 
     public Member() {
     }
 
-    public Member(int id, String sName, String lName, List<Loan> loans, boolean suspended, int maxLoans, int warnings) {
+    public Member(int id, String sName, String lName, List<Loan> loans, int suspended, int maxLoans, int warnings) {
         this.id = id;
         this.sName = sName;
         this.lName = lName;
         this.loans = loans;
+        this.suspended = suspended;
+        this.maxLoans = maxLoans;
+        this.warnings = warnings;
+    }
+
+    public Member(int id, String sName, String lName, int suspended, int maxLoans, int warnings) {
+        this.id = id;
+        this.sName = sName;
+        this.lName = lName;
         this.suspended = suspended;
         this.maxLoans = maxLoans;
         this.warnings = warnings;
@@ -57,11 +66,11 @@ public class Member {
         this.loans = loans;
     }
 
-    public boolean isSuspended() {
+    public int isSuspended() {
         return suspended;
     }
 
-    public void setSuspended(boolean suspended) {
+    public void setSuspended(int suspended) {
         this.suspended = suspended;
     }
 

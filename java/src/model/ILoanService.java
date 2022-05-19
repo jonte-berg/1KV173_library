@@ -32,7 +32,7 @@ public interface ILoanService {
 
     /*
     Get all books that is in the database.
-    @return Book[]
+    @return ArrayList<Book>
      */
 
     ArrayList<Book> getAllBooks();

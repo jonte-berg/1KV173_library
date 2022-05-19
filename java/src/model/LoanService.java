@@ -9,60 +9,174 @@ public class LoanService implements ILoanService {
 
     @Override
     public Book getBookById(int isbnNr) {
-        Book theBook = new Book();
+        Book theBook = null;
+        String query = "SELECT * FROM book WHERE isbn = " + isbnNr +"";
 
-        //Conect to the database,
-        //check if isbnNr exist in the database.
-        //if exist, then populate "theBook" with information from database.
-        //else theBook = null
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Book temp = new Book(
+                        result.getInt("isbn"),
+                        result.getString("title"),
+                        result.getString("genre"),
+                        result.getInt("quantity_total"),
+                        result.getInt("isAvailable")); //ska ändras i batabasen till totalAvailable och quantitysLeft ska tas bort.
+                theBook = temp;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong...");
+        }
 
 
         return theBook;
     }
+
+
 
     @Override
     public Book getBookByTitle(String title) {
-        Book theBook = new Book();
+        Book theBook = null;
+        String query = "SELECT * FROM book WHERE title LIKE '" + title +"%'";
 
-        //Conect to the database,
-        //check if title exist in the database.
-        //if exist, then populate "theBook" with information from database.
-        //else theBook = null
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+
+            while (result.next()) {
+                Book temp = new Book(
+                        result.getInt("isbn"),
+                        result.getString("title"),
+                        result.getString("genre"),
+                        result.getInt("quantity_total"),
+                        result.getInt("isAvailable"));
+                theBook = temp;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong...");
+        }
 
 
         return theBook;
     }
 
+
+
+    @Override
+    public ArrayList<Book> getAllBooks() {
+        ArrayList<Book> allBooksInDB = new ArrayList<>();
+        String query = "SELECT * FROM book";
+
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+
+            while (result.next()) {
+                Book temp = new Book(
+                        result.getInt("isbn"),
+                        result.getString("title"),
+                        result.getString("genre"),
+                        result.getInt("quantity_total"),
+                        result.getInt("isAvailable"));
+                allBooksInDB.add(temp);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong...");
+        }
+
+
+        return allBooksInDB;
+    }
+
+
+
+
+
     @Override
     public ArrayList<Loan> getAllLoans(LocalDate startDate, LocalDate endDate) {
-        ArrayList<Loan> allLoans = new ArrayList<>();
+        ArrayList<Loan> allLoan = new ArrayList<>();
 
-        //1. Connect to the database
+        loadDrivers();
 
-        //2. SQL statement that gets all loans in the database.
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
 
-        //3. A while loop that instantiate all loans and inserts them in "allLoans" array.
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM hasloan, loan");
 
 
-        return allLoans;
+            while (result.next()) {
+                Loan loan = new Loan(
+                        result.getInt("loanID"),
+                        result.getInt("memberID"),
+                        result.getDate("startDate").toLocalDate(),
+                        result.getDate("endDate").toLocalDate(),
+                        result.getInt("overdue"));
+                allLoan.add(loan);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong...");
+        }
+
+
+        return allLoan;
     }
 
     @Override
-    public ArrayList<Loan> getLoanByMember(int membersID) throws SQLException {
-        ArrayList<Loan> membersLoan = new ArrayList<>();
+    public Loan[] getLoanByMember(int membersID) throws SQLException {
+        Loan [] membersLoan;
+        int numberOfLoans = 0;
+        int addedLoans = 0;
 
         //Conect to the database,
+
 
         loadDrivers();
 
         try (Connection connect = DriverManager.getConnection(
-                "jdbc:mysql://localhost/Musik?useSSL=false",
-                "root", "RobinMySQL1!")) {
-
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
             System.out.println("Connected");
 
             Statement statment = connect.createStatement();
-            ResultSet result = statment.executeQuery("SELECT * FROM loan WHERE hasloan.lonid=loan.loanid");
+            ResultSet result = statment.executeQuery("SELECT COUNT(*) FROM hasLoan WHERE member = membersID");
+            numberOfLoans = result.getInt(1);
+
+
+
+            //numberOfLoans = COUNT number of rows.
+            membersLoan = new Loan [numberOfLoans];
 
 
             //while loop that adds all the loans and its information to the "allLoans" array.
@@ -75,7 +189,9 @@ public class LoanService implements ILoanService {
                         //result.getLocalDate("Hur?"),
                         //result.getBoolean()
                 );
-                membersLoan.add(tempLoan);
+
+                membersLoan[addedLoans] = tempLoan;
+                addedLoans++;
             }
         }
 
@@ -83,24 +199,17 @@ public class LoanService implements ILoanService {
         return membersLoan;
     }
 
-    @Override
-    public ArrayList<Book> getAllBooks() {
-        ArrayList<Book> allBooks = new ArrayList<>();
-
-
-        return allBooks;
-    }
 
 
 
     public static void loadDrivers() {
         try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Driver loaded");
+            //jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true
+            //System.out.println("Driver loaded");
         } catch (ClassNotFoundException ex) {
             System.out.println("Driver did not load");
         }
-
     }
 
 }

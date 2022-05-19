@@ -55,6 +55,7 @@ public class MainTest {
        ArrayList<Member> b= a.getAllMembers();
 
         System.out.println(b.get(0).getlName());
+        System.out.println("test");
 
 
 

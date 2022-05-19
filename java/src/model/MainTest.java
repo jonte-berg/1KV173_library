@@ -4,24 +4,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /*Här har vi en MainTest som vi kan göra olika tester för att visa/förklara saker på.*/
 
 
 public class MainTest {
 
-
     public static void main(String[] args) throws SQLException {
-
-
 
         /*------------------------------------getallMembers()-------------------------------------------------------*/
 
         MemberService newServ = new MemberService();
 
-        for (Member m : newServ.getAllMembers()) {
-            System.out.println(m.getsName() + " " + m.getlName());
-        }
+        for (Member memb : newServ.getAllMembers()) {
+            System.out.print(memb);
+        }              /* Ej klart */
 
         /*------------------------------------getLoanID()-------------------------------------------------------*/
 
@@ -29,7 +25,7 @@ public class MainTest {
         //Det kommer skapas automatisk och innehåller memberID och en unik kod på 4 siffror som genereras i samma stund som lånet genomförs.
 
         List<Book> borrowing = new ArrayList<>();
-        Book bok1 = new Book(112233, "Sagan om ringen", "Äventyr", 10, 10);
+        Book bok1 = new Book(112233, "Sagan om ringen", "Äventyr", 10, true);
         borrowing.add(bok1);
 
         Loan aLoan = new Loan(2008, borrowing);
@@ -43,8 +39,8 @@ public class MainTest {
 
         //Här är ett exempel på hur man kan hämta alla böcker som finns i ett specifikt lån.
 
-        Book bok2 = new Book(445566, "Hobbit", "Äventyr", 5, 5);
-        Book bok3 = new Book(778899, "Elon Musk", "Biografi", 10, 10);
+        Book bok2 = new Book(445566, "Hobbit", "Äventyr", 5, true);
+        Book bok3 = new Book(778899, "Elon Musk", "Biografi", 10, true);
         borrowing.add(bok2);
         borrowing.add(bok3);
 
@@ -53,6 +49,14 @@ public class MainTest {
         for (Book b : borrowedBooks) {
             System.out.println("ISBN nr: " + b.getIsbn());
         }
+
+
+        MemberService a = new MemberService();
+       ArrayList<Member> b= a.getAllMembers();
+
+        System.out.println(b.get(0).getlName());
+        System.out.println("test");
+
 
 
 
@@ -101,7 +105,6 @@ public class MainTest {
         } else {
             System.out.println("Boken finne inte i databasen.");
         }
-
 
 
     }

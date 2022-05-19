@@ -11,6 +11,17 @@ public class MainTest {
 
     public static void main(String[] args) throws SQLException {
 
+
+        /*------------------------------------getLoanByMemberId()-------------------------------------------------------*/
+
+        LoanService membersLoan = new LoanService();
+
+        for (Loan l : membersLoan.getLoanByMember(3)) {
+            System.out.print(l);
+        }              /* Ej klart */
+
+
+
         /*------------------------------------getallMembers()-------------------------------------------------------*/
 
         MemberService newServ = new MemberService();

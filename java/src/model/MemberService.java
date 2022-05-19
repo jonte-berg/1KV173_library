@@ -11,7 +11,7 @@ public class MemberService implements IMemberService {
         ArrayList<Member> allMembers = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true", "gruppD", "Q1w2e3r4t5")) {
+                "jdbc:mysql://library1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true", "gruppD", "Q1w2e3r4t5")) {
             System.out.println("Connected\n");
 
             Statement statement = conn.createStatement();

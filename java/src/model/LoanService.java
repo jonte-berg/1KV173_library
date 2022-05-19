@@ -34,49 +34,35 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public Loan[] getAllLoans(LocalDate startDate, LocalDate endDate) {
-        Loan [] allLoans;
-        int numberOfLoans = 0;
+    public ArrayList<Loan> getAllLoans(LocalDate startDate, LocalDate endDate) {
+        ArrayList<Loan> allLoans = new ArrayList<>();
 
         //1. Connect to the database
 
-        //2. SQL statement that count all loans.
-        //numberOfLoans = result.getInt(1);
-        allLoans = new Loan [numberOfLoans];
+        //2. SQL statement that gets all loans in the database.
 
-        //3. SQL statement that gets all loans in the database.
-
-        //4. A while loop that instantiate all loans and inserts them in "allLoans" array.
+        //3. A while loop that instantiate all loans and inserts them in "allLoans" array.
 
 
         return allLoans;
     }
 
     @Override
-    public Loan[] getLoanByMember(int membersID) throws SQLException {
-        Loan [] membersLoan;
-        int numberOfLoans = 0;
-        int addedLoans = 0;
+    public ArrayList<Loan> getLoanByMember(int membersID) throws SQLException {
+        ArrayList<Loan> membersLoan = new ArrayList<>();
 
         //Conect to the database,
-
 
         loadDrivers();
 
         try (Connection connect = DriverManager.getConnection(
-                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
-                "gruppD",
-                "Q1w2e3r4t5")) {
+                "jdbc:mysql://localhost/Musik?useSSL=false",
+                "root", "RobinMySQL1!")) {
+
             System.out.println("Connected");
 
             Statement statment = connect.createStatement();
-            ResultSet result = statment.executeQuery("SELECT COUNT(*) FROM hasLoan WHERE member = membersID");
-            numberOfLoans = result.getInt(1);
-
-
-
-            //numberOfLoans = COUNT number of rows.
-            membersLoan = new Loan [numberOfLoans];
+            ResultSet result = statment.executeQuery("SELECT * FROM loan WHERE hasloan.lonid=loan.loanid");
 
 
             //while loop that adds all the loans and its information to the "allLoans" array.
@@ -89,9 +75,7 @@ public class LoanService implements ILoanService {
                         //result.getLocalDate("Hur?"),
                         //result.getBoolean()
                 );
-
-                membersLoan[addedLoans] = tempLoan;
-                addedLoans++;
+                membersLoan.add(tempLoan);
             }
         }
 
@@ -100,20 +84,23 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public Book[] getAllBooks() {
-        return new Book[0];
+    public ArrayList<Book> getAllBooks() {
+        ArrayList<Book> allBooks = new ArrayList<>();
+
+
+        return allBooks;
     }
 
 
 
     public static void loadDrivers() {
         try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)
-            Class.forName("jdbc:mysql.Driver");
-            //jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true
+            Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver loaded");
         } catch (ClassNotFoundException ex) {
             System.out.println("Driver did not load");
         }
+
     }
 
 }

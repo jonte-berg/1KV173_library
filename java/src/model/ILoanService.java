@@ -2,6 +2,7 @@ package model;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ILoanService {
@@ -15,7 +16,7 @@ public interface ILoanService {
     @return Loan[]
      */
 
-    Loan [] getAllLoans(LocalDate startDate, LocalDate endDate);
+    ArrayList<Loan> getAllLoans(LocalDate startDate, LocalDate endDate);
 
 
 
@@ -25,7 +26,7 @@ public interface ILoanService {
     @return Loan[]
      */
 
-    Loan [] getLoanByMember(int membersID) throws SQLException;
+    ArrayList<Loan> getLoanByMember(int membersID) throws SQLException;
 
 
 
@@ -34,7 +35,7 @@ public interface ILoanService {
     @return Book[]
      */
 
-    Book [] getAllBooks();
+    ArrayList<Book> getAllBooks();
 
 
 

@@ -52,9 +52,9 @@ public class MainTest {
 
 
         MemberService a = new MemberService();
-       ArrayList<Member> b= a.getAllMembers();
+       ArrayList<Member> memberList= a.getAllMembers();
 
-        System.out.println(b.get(0).getlName());
+        System.out.println(memberList.get(0).getlName());
         System.out.println("test");
 
 

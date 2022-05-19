@@ -28,7 +28,7 @@ public class LoanService implements ILoanService {
                         result.getString("title"),
                         result.getString("genre"),
                         result.getInt("quantity_total"),
-                        result.getInt("isAvailable")); //ska ändras i batabasen till totalAvailable och quantitysLeft ska tas bort.
+                        result.getBoolean("isAvailable")); //ska ändras i batabasen till totalAvailable och quantitysLeft ska tas bort.
                 theBook = temp;
             }
 
@@ -65,7 +65,7 @@ public class LoanService implements ILoanService {
                         result.getString("title"),
                         result.getString("genre"),
                         result.getInt("quantity_total"),
-                        result.getInt("isAvailable"));
+                        result.getBoolean("isAvailable"));
                 theBook = temp;
             }
 
@@ -102,7 +102,7 @@ public class LoanService implements ILoanService {
                         result.getString("title"),
                         result.getString("genre"),
                         result.getInt("quantity_total"),
-                        result.getInt("isAvailable"));
+                        result.getBoolean("isAvailable"));
                 allBooksInDB.add(temp);
             }
 

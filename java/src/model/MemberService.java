@@ -11,12 +11,9 @@ public class MemberService implements IMemberService {
     @Override
     public ArrayList<Member>  getAllMembers() {
 
-    try{Class.forName("com.mysql.cj.jdbc.Driver").newInstance();} catch (ClassNotFoundException e) {
+    try{Class.forName("com.mysql.cj.jdbc.Driver");} catch (ClassNotFoundException e) {
     throw new RuntimeException(e);
-} catch (InstantiationException e) {
-    throw new RuntimeException(e);
-} catch (IllegalAccessException e) {
-    throw new RuntimeException(e);
+
 }
 
         ArrayList<Member> allMembers = new ArrayList<>();
@@ -56,5 +53,14 @@ public class MemberService implements IMemberService {
 
 
         return false;
+    }
+
+    public static void loadDrivers() {
+        try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver did not load");
+        }
     }
 }

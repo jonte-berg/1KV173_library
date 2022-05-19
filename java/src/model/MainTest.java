@@ -30,7 +30,7 @@ public class MainTest {
 
         Loan aLoan = new Loan(2008, borrowing);
 
-        System.out.println("LoanID: " + aLoan.getLoanID());
+        System.out.println("\nLoanID: " + aLoan.getLoanID());
 
 
 

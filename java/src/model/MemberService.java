@@ -11,7 +11,7 @@ public class MemberService implements IMemberService {
     @Override
     public ArrayList<Member>  getAllMembers() {
 
-try{Class.forName("com.mysql.cj.jdbc.Driver").newInstance();} catch (ClassNotFoundException e) {
+    try{Class.forName("com.mysql.cj.jdbc.Driver").newInstance();} catch (ClassNotFoundException e) {
     throw new RuntimeException(e);
 } catch (InstantiationException e) {
     throw new RuntimeException(e);

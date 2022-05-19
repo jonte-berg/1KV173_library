@@ -3,10 +3,21 @@ package model;
 import java.sql.*;
 import java.util.ArrayList;
 
+
+
+
 public class MemberService implements IMemberService {
 
     @Override
     public ArrayList<Member>  getAllMembers() {
+
+try{Class.forName("com.mysql.cj.jdbc.Driver").newInstance();} catch (ClassNotFoundException e) {
+    throw new RuntimeException(e);
+} catch (InstantiationException e) {
+    throw new RuntimeException(e);
+} catch (IllegalAccessException e) {
+    throw new RuntimeException(e);
+}
 
         ArrayList<Member> allMembers = new ArrayList<>();
 

@@ -62,6 +62,11 @@ public class MainTest {
         }
 
 
+        MemberService a = new MemberService();
+       ArrayList<Member> b= a.getAllMembers();
+
+        System.out.println(b.get(0).getlName());
+
 
 
         /*--------------------------------------------DB connection--------------------------------------------------------*/

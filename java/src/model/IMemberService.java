@@ -23,10 +23,14 @@ public interface IMemberService {
 
     /**
      * Update member by ID
-     * @param memberID
-     * @return boolean
+     * @param memberID,member
      */
 
-    boolean updateMember(int memberID);
+    void updateMember(int memberID,Member member); //om vi ska ha uppdatera, behöver vi diskutera lite hur (förmodligen genom att skicka member modell i param)
+
+
+    void deleteMember(int memberID);
+
+
 
 }

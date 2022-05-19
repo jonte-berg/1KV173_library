@@ -59,6 +59,9 @@ public class MainTest {
 
 
 
+        //liten quick delete test
+        // a.deleteMember(1000);
+
 
         /*------------------------------------getBookById()-------------------------------------------------------*/
 

@@ -54,3 +54,35 @@ VALUES (1534, 'Kostas', 'Konstantinos', false, 3, 0);
 
 ALTER TABLE member
 MODIFY COLUMN suspended INT;
+
+
+INSERT INTO book
+VALUES (100000, 'Sagan om ringen', 'Äventyr', 10, 10, 1);
+
+INSERT INTO book
+VALUES (100001, 'Sagan om de två tornen', 'Äventyr', 5, 5, 1);
+
+INSERT INTO book
+VALUES (100002, 'Sagan om konungens återkomst', 'Äventyr', 5, 5, 1);
+
+INSERT INTO book
+VALUES (100003, 'Harry Potter och de vise sten', 'Äventyr', 10, 10, 1);
+
+INSERT INTO book
+VALUES (100004, 'Harry Potter och hemligheternas kammare', 'Äventyr', 10, 10, 1);
+
+INSERT INTO book
+VALUES (100005, 'Harry Potter och fången från Azkaban', 'Äventyr', 5, 5, 1);
+
+INSERT INTO book
+VALUES (100006, 'Harry Potter och den flammande bägaren', 'Äventyr', 5, 5, 1);
+
+INSERT INTO book
+VALUES (100007, 'Harry Potter och Fenixorden', 'Äventyr', 5, 5, 1);
+
+INSERT INTO book
+VALUES (100008, 'Harry Potter och halvblodsprinsen', 'Äventyr', 3, 3, 1);
+
+INSERT INTO book
+VALUES (100009, 'Harry Potter och dödsrelikerna', 'Äventyr', 3, 3, 1);
+

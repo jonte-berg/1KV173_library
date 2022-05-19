@@ -59,13 +59,52 @@ public class MainTest {
 
 
 
-        /*--------------------------------------------DB connection--------------------------------------------------------*/
 
-        //Har inte fått rätt på kopplingen mellan Intellij/Java och databasen.
+        /*------------------------------------getBookById()-------------------------------------------------------*/
 
-       // LoanService ls = new LoanService();
-       // Loan [] testConnection = ls.getLoanByMember(2008);
+        LoanService service = new LoanService();
+        Book bookInDB = service.getBookById(100005);
 
+        if (bookInDB != null) {
+            System.out.println("\n-----getBookById()------");
+            System.out.println("Titel: " + bookInDB.getTitle());
+            System.out.println("ISBN: " + bookInDB.getIsbn());
+        } else {
+            System.out.println("Boken finne inte i databasen.");
+        }
+
+
+
+        /*------------------------------------getBookByTitle()-------------------------------------------------------*/
+
+        LoanService service1 = new LoanService();
+        Book bookByTitle = service1.getBookByTitle("Harry Potter och de vise");
+
+        if (bookByTitle != null) {
+            System.out.println("\n-----getBookByTitle()------");
+            System.out.println("Titel: " + bookByTitle.getTitle());
+            System.out.println("ISBN: " + bookByTitle.getIsbn());
+        } else {
+            System.out.println("Boken finne inte i databasen.");
+        }
+
+
+
+        /*------------------------------------getallBooks()-------------------------------------------------------*/
+
+        LoanService service2 = new LoanService();
+        ArrayList<Book> allBooks = service2.getAllBooks();
+
+        System.out.println("\n-----getAllBooks()------");
+
+        if (allBooks != null) {
+            for (Book b : allBooks) {
+                System.out.print("Titel: " + b.getTitle() + " - ");
+                System.out.println("ISBN: " + b.getIsbn());
+            }
+        } else {
+            System.out.println("Boken finne inte i databasen.");
+        }
 
 
     }

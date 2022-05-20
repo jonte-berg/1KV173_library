@@ -21,20 +21,11 @@ public interface IMemberManager {
     boolean deleteMember(int memberID);
 
     /**
-     * Suspend member
-     * @param start
-     * @param end
-     * @return boolean
-     */
-
-    boolean suspendMember(LocalDate start, LocalDate end);
-
-
-    /**
      * Search member
      * @param memberID
      * @return boolean
      */
+
     boolean searchForMember(int memberID);
 
 }

@@ -22,11 +22,19 @@ public interface IMemberService {
     Member getTheMember(int memberID);
 
     /**
-     * Update member by ID
+     * Add member by member object
+     * @param newMember
+     * @return boolean
+     */
+
+    boolean addMember(Member newMember);
+
+    /**
+     * Delete member by ID
      * @param memberID
      * @return boolean
      */
 
-    boolean updateMember(int memberID);
+    boolean deleteMember(int memberID);
 
 }

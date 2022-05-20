@@ -4,24 +4,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /*Här har vi en MainTest som vi kan göra olika tester för att visa/förklara saker på.*/
 
 
 public class MainTest {
 
-
     public static void main(String[] args) throws SQLException {
 
+        /*------------------------------------getTheMember()-------------------------------------------------------*/
+        MemberService newServ = new MemberService();
 
+        System.out.println(newServ.getTheMember(1001));
 
         /*------------------------------------getallMembers()-------------------------------------------------------*/
 
-        MemberService newServ = new MemberService();
+        MemberService newServ2 = new MemberService();
 
-        for (Member m : newServ.getAllMembers()) {
-            System.out.println(m.getsName() + " " + m.getlName());
+        for (Member memb : newServ.getAllMembers()) {
+            System.out.print(memb);
         }
+
 
         /*------------------------------------getLoanID()-------------------------------------------------------*/
 

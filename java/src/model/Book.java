@@ -5,18 +5,18 @@ public class Book {
     private int isbn;
     private String title;
     private String genre;
-    private int totalQuantity; //Robin har ändrat namn
-    private int totalAvailable; //Robin har tagit bort quantetiesLeft och bytt namn på isAvalable till totalAvailable.
+    private int copies; 
+    private int available;
 
 
     public Book(){}
 
-    public Book(int isbn, String title, String genre, int quantityTotal, int totalAvailable){
+    public Book(int isbn, String title, String genre, int numberOfCopies, int numberOfAvailableBooks){
         this.isbn=isbn;
         this.title=title;
         this.genre=genre;
-        this.totalQuantity = quantityTotal;
-        this.totalAvailable = totalAvailable;
+        this.copies = numberOfCopies;
+        this.available = numberOfAvailableBooks;
     }
 
     public int getIsbn() {
@@ -44,12 +44,19 @@ public class Book {
     }
 
 
-
-    public int getTotalAvailable() {
-        return this.totalAvailable;
+    public int getCopies() {
+        return copies;
     }
 
-    public void setAvailable(int available) {
-        totalAvailable = available;
+    public void setCopies(int numberOfCopies) {
+        this.copies = numberOfCopies;
+    }
+
+    public int getAvailable() {
+        return this.available;
+    }
+
+    public void setAvailable(int numberOfAvailableBooks) {
+        this.available = numberOfAvailableBooks;
     }
 }

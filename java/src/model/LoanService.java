@@ -27,8 +27,8 @@ public class LoanService implements ILoanService {
                         result.getInt("isbn"),
                         result.getString("title"),
                         result.getString("genre"),
-                        result.getInt("quantity_total"),
-                        result.getInt("isAvailable")); //ska ändras i batabasen till totalAvailable och quantitysLeft ska tas bort.
+                        result.getInt("copies"),
+                        result.getInt("available")); //ska ändras i batabasen till available och quantitysLeft ska tas bort.
                 theBook = temp;
             }
 
@@ -64,8 +64,8 @@ public class LoanService implements ILoanService {
                         result.getInt("isbn"),
                         result.getString("title"),
                         result.getString("genre"),
-                        result.getInt("quantity_total"),
-                        result.getInt("isAvailable"));
+                        result.getInt("copies"),
+                        result.getInt("available"));  //ska ändras i batabasen till available och quantitysLeft ska tas bort.
                 theBook = temp;
             }
 
@@ -101,8 +101,8 @@ public class LoanService implements ILoanService {
                         result.getInt("isbn"),
                         result.getString("title"),
                         result.getString("genre"),
-                        result.getInt("quantity_total"),
-                        result.getInt("isAvailable"));
+                        result.getInt("copies"),
+                        result.getInt("available"));  //ska ändras i batabasen till available och quantitysLeft ska tas bort.
                 allBooksInDB.add(temp);
             }
 

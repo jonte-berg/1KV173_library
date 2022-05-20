@@ -35,6 +35,8 @@ public interface ILoanService {
     @return ArrayList<Book>
      */
 
+
+
     ArrayList<Book> getAllBooks();
 
 
@@ -63,6 +65,14 @@ public interface ILoanService {
     @return Book
      */
 
-    Boolean addLoan(Loan loan);
+    boolean addLoan(Loan loan);
+
+
+    /*
+       delete a loan.
+       @para loanID
+       @return boolean
+        */
+    boolean deleteLoan(int loanID);
 
 }

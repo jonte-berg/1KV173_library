@@ -21,6 +21,16 @@ public interface IMemberManager {
     boolean deleteMember(int memberID);
 
     /**
+     * update member
+     * @param memberID
+     * @param member
+     * @return boolean
+     */
+
+    boolean updateMember(int memberID, Member member);
+
+
+    /**
      * Suspend member
      * @param start
      * @param end

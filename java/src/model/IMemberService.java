@@ -21,16 +21,4 @@ public interface IMemberService {
 
     Member getTheMember(int memberID);
 
-    /**
-     * Update member by ID
-     * @param memberID,member
-     */
-
-    void updateMember(int memberID,Member member); //om vi ska ha uppdatera, behöver vi diskutera lite hur (förmodligen genom att skicka member modell i param)
-
-
-    void deleteMember(int memberID);
-
-
-
 }

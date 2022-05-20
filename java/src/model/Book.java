@@ -5,17 +5,18 @@ public class Book {
     private int isbn;
     private String title;
     private String genre;
-    private int quantity;
-    private boolean isAvailable;
+    private int copies; 
+    private int available;
+
 
     public Book(){}
 
-    public Book(int isbn, String title, String genre, int quantity, boolean isAvailable){
+    public Book(int isbn, String title, String genre, int numberOfCopies, int numberOfAvailableBooks){
         this.isbn=isbn;
         this.title=title;
         this.genre=genre;
-        this.quantity=quantity;
-        this.isAvailable=isAvailable;
+        this.copies = numberOfCopies;
+        this.available = numberOfAvailableBooks;
     }
 
     public int getIsbn() {
@@ -42,19 +43,20 @@ public class Book {
         this.genre = genre;
     }
 
-    public int getQuantity() {
-        return quantity;
+
+    public int getCopies() {
+        return copies;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCopies(int numberOfCopies) {
+        this.copies = numberOfCopies;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public int getAvailable() {
+        return this.available;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setAvailable(int numberOfAvailableBooks) {
+        this.available = numberOfAvailableBooks;
     }
 }

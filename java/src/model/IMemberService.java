@@ -1,6 +1,7 @@
 package model;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface IMemberService {
@@ -36,5 +37,6 @@ public interface IMemberService {
      */
 
     boolean deleteMember(int memberID);
+     boolean suspendMember(LocalDate start, LocalDate end);
 
 }

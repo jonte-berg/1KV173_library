@@ -39,6 +39,8 @@ public class MemberManager implements IMemberManager {
         return false;
     }
 
+   public  boolean suspendMember(LocalDate start, LocalDate end){return false;};
+
 
     public static void loadDrivers() {
         try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)

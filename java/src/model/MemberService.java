@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -100,6 +101,11 @@ public class MemberService implements IMemberService {
 
             System.out.println("Something went wrong...");
         }
+        return false;
+    }
+
+    @Override
+    public boolean suspendMember(LocalDate start, LocalDate end) {
         return false;
     }
 

@@ -74,6 +74,15 @@ public class MemberService implements IMemberService {
         return memb;
     }
 
+    public boolean addMember(Member newMember) {
+
+        return false;
+    }
+
+    public boolean deleteMember(int memberID) {
+
+        return false;
+    }
 
 
     public static void loadDrivers() {

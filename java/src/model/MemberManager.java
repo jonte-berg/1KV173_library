@@ -51,20 +51,12 @@ public class MemberManager implements IMemberManager {
             return false;
     }
 
-    @Override
-    public boolean updateMember(int memberID, Member member) {
-        return false;
-    }
-
-    @Override
-    public boolean suspendMember(LocalDate start, LocalDate end) {
-        return false;
-    }
 
     @Override
     public boolean searchForMember(int memberID) {
         return false;
     }
+
 
     public static void loadDrivers() {
         try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)

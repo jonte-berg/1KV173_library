@@ -27,6 +27,8 @@ class MemberManagerTest {
 
     @Test
     void addMember() {
+        Member newMember = new Member (1634,"John","Doe",0,3,0);
+
     }
 
     @Test

@@ -37,6 +37,5 @@ public interface IMemberService {
      */
 
     boolean deleteMember(int memberID);
-     boolean suspendMember(LocalDate start, LocalDate end);
 
 }

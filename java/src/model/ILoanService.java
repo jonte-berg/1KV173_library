@@ -75,7 +75,12 @@ public interface ILoanService {
     @return boolean
     */
 
-    boolean addLoan(int loanID);
+    boolean deleteLoan(int loanID);
+
+
+
+
+
 
 
 

@@ -121,7 +121,7 @@ public class MainTest {
        /*------------------------------------getLoanByMember()-------------------------------------------------------*/
 
         LoanService service3 = new LoanService();
-        ArrayList<Loan> membersLoan = service2.getLoanByMember(1001);
+        ArrayList<Loan> membersLoan = service3.getLoanByMember(1001);
 
         System.out.println("\n-----getLoanByMember()------");
 

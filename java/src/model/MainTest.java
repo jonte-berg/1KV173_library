@@ -11,19 +11,31 @@ public class MainTest {
 
     public static void main(String[] args) throws SQLException {
 
+        /*------------------------------------addMember()-------------------------------------------------------*/
+        /* MemberService newServ3 = new MemberService();
+           Member newMember = new Member (1002,"John","Doe",0,3,0);
+
+           newServ3.addMember(newMember);          /* Lägga till John Doe */
+
+        /*------------------------------------deleteMember()-------------------------------------------------------*/
+
+        /*  MemberService newServ4 = new MemberService();
+
+            newServ4.deleteMember(1002);          /* Ta bort John Doe */
+
+
         /*------------------------------------getTheMember()-------------------------------------------------------*/
         MemberService newServ = new MemberService();
 
         System.out.println(newServ.getTheMember(1001));
 
-        /*------------------------------------getallMembers()-------------------------------------------------------*/
+        /*------------------------------------getAllMembers()-------------------------------------------------------*/
 
         MemberService newServ2 = new MemberService();
 
-        for (Member memb : newServ.getAllMembers()) {
+        for (Member memb: newServ2.getAllMembers()) {
             System.out.print(memb);
         }
-
 
         /*------------------------------------getLoanID()-------------------------------------------------------*/
 

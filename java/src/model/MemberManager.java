@@ -19,6 +19,9 @@ public class MemberManager implements IMemberManager {
 
     @Override
     public boolean addMember(Member newMember) {
+
+        service.addMember(newMember);
+
         return false;
     }
 

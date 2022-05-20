@@ -89,4 +89,16 @@ public class Member {
     public void setWarnings(int warnings) {
         this.warnings = warnings;
     }
+
+    @Override
+    public String toString() {
+        return " Member {" +
+                "id=" + id +
+                ", sName='" + sName + '\'' +
+                ", lName='" + lName + '\'' +
+                ", suspended=" + suspended +
+                ", maxLoans=" + maxLoans +
+                ", warnings=" + warnings +
+                '}';
+    }
 }

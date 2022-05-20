@@ -9,9 +9,8 @@ total_Warnings INT
 
 CREATE TABLE Loan (
 loanID INT PRIMARY KEY,
-title VARCHAR(100),
-startDate datetime,
-endDate datetime,
+startDate date,
+endDate date,
 overdue boolean
 );
 
@@ -19,9 +18,8 @@ CREATE TABLE Book (
 isbn INT PRIMARY KEY,
 title VARCHAR(100),
 genre VARCHAR(45),
-quantity_total int,
-quantity_left int,
-isAvailable boolean
+copies int,
+available int
 );
 
 CREATE TABLE hasLoan (
@@ -41,48 +39,48 @@ CONSTRAINT fk_book_hasBook FOREIGN KEY (book_ISBN) REFERENCES Book(isbn)
 );
 
 INSERT INTO Member
-VALUES (1234, 'Dennis', 'Schill', false, 3, 0);
+VALUES (10001, 'Dennis', 'Schill', 0, 3, 0);
 
 INSERT INTO Member
-VALUES (1334, 'Robin', 'Sjöberg', false, 3, 0);
+VALUES (20001, 'Robin', 'Sjöberg', 0, 3, 0);
 
 INSERT INTO Member
-VALUES (1434, 'Jonathan', 'Berg', false, 3, 0);
+VALUES (30001, 'Jonathan', 'Berg', 0, 3, 0);
 
 INSERT INTO Member
-VALUES (1534, 'Kostas', 'Konstantinos', false, 3, 0);
+VALUES (40001, 'Kostas', 'Konstantinos', 0, 3, 0);
 
 ALTER TABLE member
 MODIFY COLUMN suspended INT;
 
 
 INSERT INTO book
-VALUES (100000, 'Sagan om ringen', 'Äventyr', 10, 10, 1);
+VALUES (100000, 'Sagan om ringen', 'Äventyr', 10, 10);
 
 INSERT INTO book
-VALUES (100001, 'Sagan om de två tornen', 'Äventyr', 5, 5, 1);
+VALUES (100001, 'Sagan om de två tornen', 'Äventyr', 5, 5);
 
 INSERT INTO book
-VALUES (100002, 'Sagan om konungens återkomst', 'Äventyr', 5, 5, 1);
+VALUES (100002, 'Sagan om konungens återkomst', 'Äventyr', 5, 5);
 
 INSERT INTO book
-VALUES (100003, 'Harry Potter och de vise sten', 'Äventyr', 10, 10, 1);
+VALUES (100003, 'Harry Potter och de vise sten', 'Äventyr', 10, 10);
 
 INSERT INTO book
-VALUES (100004, 'Harry Potter och hemligheternas kammare', 'Äventyr', 10, 10, 1);
+VALUES (100004, 'Harry Potter och hemligheternas kammare', 'Äventyr', 10, 10);
 
 INSERT INTO book
-VALUES (100005, 'Harry Potter och fången från Azkaban', 'Äventyr', 5, 5, 1);
+VALUES (100005, 'Harry Potter och fången från Azkaban', 'Äventyr', 5, 5);
 
 INSERT INTO book
-VALUES (100006, 'Harry Potter och den flammande bägaren', 'Äventyr', 5, 5, 1);
+VALUES (100006, 'Harry Potter och den flammande bägaren', 'Äventyr', 5, 5);
 
 INSERT INTO book
-VALUES (100007, 'Harry Potter och Fenixorden', 'Äventyr', 5, 5, 1);
+VALUES (100007, 'Harry Potter och Fenixorden', 'Äventyr', 5, 5);
 
 INSERT INTO book
-VALUES (100008, 'Harry Potter och halvblodsprinsen', 'Äventyr', 3, 3, 1);
+VALUES (100008, 'Harry Potter och halvblodsprinsen', 'Äventyr', 3, 3);
 
 INSERT INTO book
-VALUES (100009, 'Harry Potter och dödsrelikerna', 'Äventyr', 3, 3, 1);
+VALUES (100009, 'Harry Potter och dödsrelikerna', 'Äventyr', 3, 3);
 

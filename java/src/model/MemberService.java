@@ -11,13 +11,7 @@ public class MemberService implements IMemberService {
     @Override
     public ArrayList<Member>  getAllMembers() {
 
-    try{Class.forName("com.mysql.cj.jdbc.Driver").newInstance();} catch (ClassNotFoundException e) {
-    throw new RuntimeException(e);
-} catch (InstantiationException e) {
-    throw new RuntimeException(e);
-} catch (IllegalAccessException e) {
-    throw new RuntimeException(e);
-}
+        loadDrivers();
 
         ArrayList<Member> allMembers = new ArrayList<>();
 
@@ -45,16 +39,60 @@ public class MemberService implements IMemberService {
     @Override
     public Member getTheMember(int memberID) {
 
-        /* Code that retrieves from database */
+        Member memb=null ;
+        String query = "SELECT * FROM Member WHERE memberID = " + memberID +"";
 
-        return null;
+        loadDrivers();
+
+
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+
+
+            while (result.next()) {
+                memb = new Member(
+                        result.getInt("memberID"),
+                        result.getString("sName"),
+                        result.getString("lName"),
+                        result.getInt("suspended"),
+                        result.getInt("maxLoans"),
+                        result.getInt("total_Warnings"));
+            }
+
+        } catch (SQLException ex) {
+
+            System.out.println("Something went wrong...");
+        }
+
+        return memb;
     }
 
-    @Override
-    public boolean updateMember(int memberID) {
-
-
+    public boolean addMember(Member newMember) {
 
         return false;
     }
+
+    public boolean deleteMember(int memberID) {
+
+        return false;
+    }
+
+
+    public static void loadDrivers() {
+        try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver did not load");
+        }
+    }
+
+
 }

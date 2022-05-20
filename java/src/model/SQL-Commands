@@ -40,16 +40,16 @@ CONSTRAINT fk_book_hasBook FOREIGN KEY (book_ISBN) REFERENCES Book(isbn)
 );
 
 INSERT INTO Member
-VALUES (1234, 'Dennis', 'Schill', false, 3, 0);
+VALUES (10001, 'Dennis', 'Schill', 0, 3, 0);
 
 INSERT INTO Member
-VALUES (1334, 'Robin', 'Sjöberg', false, 3, 0);
+VALUES (20001, 'Robin', 'Sjöberg', 0, 3, 0);
 
 INSERT INTO Member
-VALUES (1434, 'Jonathan', 'Berg', false, 3, 0);
+VALUES (30001, 'Jonathan', 'Berg', 0, 3, 0);
 
 INSERT INTO Member
-VALUES (1534, 'Kostas', 'Konstantinos', false, 3, 0);
+VALUES (40001, 'Kostas', 'Konstantinos', 0, 3, 0);
 
 ALTER TABLE member
 MODIFY COLUMN suspended INT;

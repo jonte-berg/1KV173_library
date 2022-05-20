@@ -3,6 +3,16 @@
   <component name="dataSourceStorageLocal" created-in="IU-221.5080.210">
     <data-source name="@localhost" uuid="a2cf617e-2b5b-42a0-b57e-e9d50baafe5d">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" negative="1" />
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="User Data Source NY" uuid="caf61543-1f5c-450a-bc59-a5cd950628fc">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>gruppD</user-name>
       <schema-mapping />
     </data-source>
   </component>

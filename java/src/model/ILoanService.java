@@ -57,4 +57,28 @@ public interface ILoanService {
 
     Book getBookByTitle(String title);
 
+
+
+    /*
+    Add a Loan to database and return a boolean, true if the loan was added (search lonID) of fals if it don't exist.
+    @para newLoan
+    @return boolean
+    */
+
+    boolean addLoan(Loan newLoan);
+
+
+
+        /*
+    Delete a Loan in the database and return a boolean, true if the loan was added (search lonID) of fals if it don't exist.
+    @para loanID
+    @return boolean
+    */
+
+    boolean addLoan(int loanID);
+
+
+
+
+
 }

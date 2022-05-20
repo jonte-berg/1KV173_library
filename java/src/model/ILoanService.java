@@ -26,7 +26,7 @@ public interface ILoanService {
     @return Loan[]
      */
 
-    Loan [] getLoanByMember(int membersID) throws SQLException;
+    ArrayList<Loan> getLoanByMember(int membersID) throws SQLException;
 
 
 

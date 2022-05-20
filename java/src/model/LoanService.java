@@ -76,15 +76,6 @@ public class LoanService implements ILoanService {
         return theBook;
     }
 
-    @Override
-    public boolean addLoan(Loan loan) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteLoan(int loanID) {
-        return false;
-    }
 
 
     @Override
@@ -160,6 +151,7 @@ public class LoanService implements ILoanService {
         return allLoan;
     }
 
+
     @Override
     public ArrayList<Loan> getLoanByMember(int membersID) throws SQLException {
         ArrayList<Loan> membersLoan = new ArrayList<>();
@@ -167,6 +159,24 @@ public class LoanService implements ILoanService {
 
         return membersLoan;
     }
+
+
+
+
+    @Override
+    public boolean addLoan(Loan loan) {
+        return false;
+    }
+
+
+
+
+    @Override
+    public boolean deleteLoan(int loanID) {
+        return false;
+    }
+
+
 
 
 

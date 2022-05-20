@@ -76,15 +76,8 @@ public class LoanService implements ILoanService {
         return theBook;
     }
 
-    @Override
-    public boolean addLoan(Loan loan) {
-        return false;
-    }
 
-    @Override
-    public boolean deleteLoan(int loanID) {
-        return false;
-    }
+
 
 
     @Override
@@ -155,18 +148,69 @@ public class LoanService implements ILoanService {
         } catch (SQLException ex) {
             System.out.println("Something went wrong...");
         }
-
-
         return allLoan;
     }
+
+
+
+
 
     @Override
     public ArrayList<Loan> getLoanByMember(int membersID) throws SQLException {
         ArrayList<Loan> membersLoan = new ArrayList<>();
+        String query = "SELECT hasloan.memberid, loan.loanid, startDate, endDate, overdue\n" +
+                       "FROM hasloan, loan\n" +
+                       "WHERE loan.loanid = hasloan.loanid\n" +
+                       "AND hasloan.memberid = " + membersID + ";";    //To do - Läs även in böckerna som är i lånet.
 
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+
+            while (result.next()) {
+                Loan temp = new Loan(
+                        result.getInt("loanid"),
+                        result.getInt("memberid"),
+                        result.getDate("startDate").toLocalDate(),
+                        result.getDate("endDate").toLocalDate(),
+                        result.getInt("overdue"));
+                membersLoan.add(temp);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong...");
+        }
 
         return membersLoan;
     }
+
+
+
+
+
+
+    @Override
+    public boolean addLoan(Loan loan) {
+        return false;
+    }
+
+
+
+
+    @Override
+    public boolean deleteLoan(int loanID) {
+        return false;
+    }
+
+
 
 
 

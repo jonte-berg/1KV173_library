@@ -23,7 +23,7 @@ public class LoanManager implements ILoanManager{
         return false;
     }
 
-    @Override
+    @Override //deleteman JONTE
     public boolean deleteLoan(int loanID) {
         return false;
     }

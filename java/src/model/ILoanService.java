@@ -57,4 +57,12 @@ public interface ILoanService {
 
     Book getBookByTitle(String title);
 
+     /*
+    add a loan.
+    @para title
+    @return Book
+     */
+
+    Boolean addLoan(Loan loan);
+
 }

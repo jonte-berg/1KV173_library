@@ -81,6 +81,29 @@ public class MemberService implements IMemberService {
 
     public boolean deleteMember(int memberID) {
 
+        /*hmmm jag undrar om vi ska ha ngn form av check som kollar ifall memberID existerar i DB först
+        kanske är onödigt eftersom jag tycker denna metod borde vara "låst" bakom att man "väljer" en användare i ex MemberArraylist,
+        så då kommer det alltid finnas en member med det ID man skickar med... har ni några åsikter?
+        metoden funkar btw, testade den i mainTest
+        */
+        loadDrivers();
+
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+            Statement statement = conn.createStatement();
+            statement.execute("DELETE FROM member WHERE memberID ="+memberID+"");
+
+            //System.out.println("Member with id: "+memberID+" is deleted");
+            return true;
+
+        } catch (SQLException ex) {
+
+            System.out.println("Something went wrong...");
+        }
         return false;
     }
 

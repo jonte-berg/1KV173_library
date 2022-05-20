@@ -77,6 +77,10 @@ public class LoanService implements ILoanService {
         return theBook;
     }
 
+    @Override
+    public Boolean addLoan(Loan loan) {
+        return null;
+    }
 
 
     @Override

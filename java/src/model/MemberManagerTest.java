@@ -34,6 +34,11 @@ class MemberManagerTest {
     }
 
     @Test
+    void updateMember() {
+
+    }
+
+    @Test
     void suspendMember() {
     }
 

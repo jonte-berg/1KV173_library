@@ -101,9 +101,7 @@ public class MemberService implements IMemberService {
 
     public boolean deleteMember(int memberID) {
 
-
         loadDrivers();
-
 
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
@@ -123,6 +121,7 @@ public class MemberService implements IMemberService {
         return false;
     }
 
+
     public static void loadDrivers() {
         try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -131,6 +130,5 @@ public class MemberService implements IMemberService {
             System.out.println("Driver did not load");
         }
     }
-
 
 }

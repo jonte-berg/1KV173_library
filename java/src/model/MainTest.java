@@ -24,13 +24,14 @@ public class MainTest {
             System.out.print(memb);
         }              /* Ej klart */
 
+
         /*------------------------------------getLoanID()-------------------------------------------------------*/
 
         //Här är ett test för att se hur ett loanID kan se ut.
         //Det kommer skapas automatisk och innehåller memberID och en unik kod på 4 siffror som genereras i samma stund som lånet genomförs.
 
         List<Book> borrowing = new ArrayList<>();
-        Book bok1 = new Book(112233, "Sagan om ringen", "Äventyr", 10, true);
+        Book bok1 = new Book(112233, "Sagan om ringen", "Äventyr", 10, 10);
         borrowing.add(bok1);
 
         Loan aLoan = new Loan(2008, borrowing);
@@ -44,8 +45,8 @@ public class MainTest {
 
         //Här är ett exempel på hur man kan hämta alla böcker som finns i ett specifikt lån.
 
-        Book bok2 = new Book(445566, "Hobbit", "Äventyr", 5, true);
-        Book bok3 = new Book(778899, "Elon Musk", "Biografi", 10, true);
+        Book bok2 = new Book(445566, "Hobbit", "Äventyr", 5, 5);
+        Book bok3 = new Book(778899, "Elon Musk", "Biografi", 10, 10);
         borrowing.add(bok2);
         borrowing.add(bok3);
 
@@ -55,17 +56,6 @@ public class MainTest {
             System.out.println("ISBN nr: " + b.getIsbn());
         }
 
-
-        MemberService a = new MemberService();
-       ArrayList<Member> memberList= a.getAllMembers();
-
-        System.out.println(memberList.get(0).getlName());
-        System.out.println("test");
-
-
-
-        //liten quick delete test
-        // a.deleteMember(1000);
 
 
         /*------------------------------------getBookById()-------------------------------------------------------*/
@@ -113,6 +103,7 @@ public class MainTest {
         } else {
             System.out.println("Boken finne inte i databasen.");
         }
+
 
 
     }

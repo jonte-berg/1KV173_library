@@ -42,12 +42,13 @@ public class MemberManager implements IMemberManager {
             statement.execute("DELETE FROM member WHERE memberID ="+memberID+"");
 
             //System.out.println("Member with id: "+memberID+" is deleted");
+            return true;
 
         } catch (SQLException ex) {
 
             System.out.println("Something went wrong...");
         }
-            return true;
+            return false;
     }
 
     @Override

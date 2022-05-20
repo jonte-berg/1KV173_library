@@ -9,7 +9,6 @@ total_Warnings INT
 
 CREATE TABLE Loan (
 loanID INT PRIMARY KEY,
-title VARCHAR(100),
 startDate date,
 endDate date,
 overdue boolean

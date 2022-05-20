@@ -35,6 +35,8 @@ public interface ILoanService {
     @return ArrayList<Book>
      */
 
+
+
     ArrayList<Book> getAllBooks();
 
 
@@ -57,33 +59,20 @@ public interface ILoanService {
 
     Book getBookByTitle(String title);
 
+     /*
+    add a loan.
+    @para title
+    @return Book
+     */
+
+    boolean addLoan(Loan loan);
 
 
     /*
-    Add a Loan to database and return a boolean, true if the loan was added (search lonID) of fals if it don't exist.
-    @para newLoan
-    @return boolean
-    */
-
-    boolean addLoan(Loan newLoan);
-
-
-
-        /*
-    Delete a Loan in the database and return a boolean, true if the loan was added (search lonID) of fals if it don't exist.
-    @para loanID
-    @return boolean
-    */
-
+       delete a loan.
+       @para loanID
+       @return boolean
+        */
     boolean deleteLoan(int loanID);
-
-
-
-
-
-
-
-
-
 
 }

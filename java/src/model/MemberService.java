@@ -81,6 +81,25 @@ public class MemberService implements IMemberService {
 
     public boolean deleteMember(int memberID) {
 
+
+        loadDrivers();
+
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+            Statement statement = conn.createStatement();
+            statement.execute("DELETE FROM member WHERE memberID ="+memberID+"");
+
+            //System.out.println("Member with id: "+memberID+" is deleted");
+            return true;
+
+        } catch (SQLException ex) {
+
+            System.out.println("Something went wrong...");
+        }
         return false;
     }
 

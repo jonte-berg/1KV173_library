@@ -3,7 +3,6 @@ package model;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class LoanService implements ILoanService {
 
@@ -77,6 +76,15 @@ public class LoanService implements ILoanService {
         return theBook;
     }
 
+    @Override
+    public boolean addLoan(Loan loan) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteLoan(int loanID) {
+        return false;
+    }
 
 
     @Override

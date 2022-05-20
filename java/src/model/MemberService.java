@@ -40,7 +40,7 @@ public class MemberService implements IMemberService {
     public Member getTheMember(int memberID) {
 
         Member memb=null ;
-        String query = "SELECT * FROM member WHERE memberID = " + memberID +"";
+        String query = "SELECT * FROM Member WHERE memberID = " + memberID +"";
 
         loadDrivers();
 

@@ -14,7 +14,7 @@ public class MainTest {
         /*------------------------------------getTheMember()-------------------------------------------------------*/
         MemberService newServ = new MemberService();
 
-        newServ.getTheMember(1234);
+        System.out.println(newServ.getTheMember(1234));
 
         /*------------------------------------getallMembers()-------------------------------------------------------*/
 

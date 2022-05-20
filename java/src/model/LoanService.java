@@ -153,47 +153,8 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public Loan[] getLoanByMember(int membersID) throws SQLException {
-        Loan [] membersLoan;
-        int numberOfLoans = 0;
-        int addedLoans = 0;
-
-        //Conect to the database,
-
-
-        loadDrivers();
-
-        try (Connection connect = DriverManager.getConnection(
-                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
-                "gruppD",
-                "Q1w2e3r4t5")) {
-            System.out.println("Connected");
-
-            Statement statment = connect.createStatement();
-            ResultSet result = statment.executeQuery("SELECT COUNT(*) FROM hasLoan WHERE member = membersID");
-            numberOfLoans = result.getInt(1);
-
-
-
-            //numberOfLoans = COUNT number of rows.
-            membersLoan = new Loan [numberOfLoans];
-
-
-            //while loop that adds all the loans and its information to the "allLoans" array.
-            while (result.next()) {
-                Loan tempLoan = new Loan(
-                        //result.getInt("loanID")
-                        //result.getInt("memberID")
-                        //result.getBook("Hur?"),
-                        //result.getLocalDate("Hur?"),
-                        //result.getLocalDate("Hur?"),
-                        //result.getBoolean()
-                );
-
-                membersLoan[addedLoans] = tempLoan;
-                addedLoans++;
-            }
-        }
+    public ArrayList<Loan> getLoanByMember(int membersID) throws SQLException {
+        ArrayList<Loan> membersLoan = new ArrayList<>();
 
 
         return membersLoan;

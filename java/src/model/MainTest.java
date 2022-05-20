@@ -115,6 +115,30 @@ public class MainTest {
         } else {
             System.out.println("Boken finne inte i databasen.");
         }
+        
+        
+        
+       /*------------------------------------getLoanByMember()-------------------------------------------------------*/
+
+        LoanService service3 = new LoanService();
+        ArrayList<Loan> membersLoan = service2.getLoanByMember(1001);
+
+        System.out.println("\n-----getLoanByMember()------");
+
+        if (membersLoan != null) {
+            for (Loan l : membersLoan) {
+                System.out.println("MemberID: " + l.getMemberID());
+                System.out.println("LoanID: " + l.getLoanID());
+                System.out.println("StartDate: " + l.getStartDate());
+                System.out.println("EndDate: " + l.getEndDate());
+                System.out.println("Overdue: " + l.getOverdue());
+                System.out.println("----------");
+
+            }
+        } else {
+            System.out.println("Boken finne inte i databasen.");
+        }
+
 
 
 

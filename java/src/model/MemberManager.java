@@ -25,7 +25,12 @@ public class MemberManager implements IMemberManager {
     @Override
     public boolean deleteMember(int memberID) {
 
-       return false;
+        if (service.getTheMember(memberID)==null)
+            return false;
+        else
+            service.deleteMember(memberID);
+
+       return true;
     }
 
 

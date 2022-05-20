@@ -4,6 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
@@ -33,6 +36,18 @@ class MemberManagerTest {
 
     @Test
     void deleteMember() {
+
+        // testar jag fel nu? dvs testar jag service ist för manager
+        when(memberService.getTheMember(1))
+                .thenReturn( new Member(1, "jont", "berg", 0,0,0));
+        when(memberService.getTheMember(2))
+                .thenReturn( null);
+
+
+        assertEquals(mg.deleteMember(1),true);
+        assertEquals(mg.deleteMember(2),false);
+
+
     }
 
     @Test

@@ -81,11 +81,7 @@ public class MemberService implements IMemberService {
 
     public boolean deleteMember(int memberID) {
 
-        /*hmmm jag undrar om vi ska ha ngn form av check som kollar ifall memberID existerar i DB först
-        kanske är onödigt eftersom jag tycker denna metod borde vara "låst" bakom att man "väljer" en användare i ex MemberArraylist,
-        så då kommer det alltid finnas en member med det ID man skickar med... har ni några åsikter?
-        metoden funkar btw, testade den i mainTest
-        */
+
         loadDrivers();
 
 

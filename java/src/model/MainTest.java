@@ -14,7 +14,7 @@ public class MainTest {
         /*------------------------------------getTheMember()-------------------------------------------------------*/
         MemberService newServ = new MemberService();
 
-        System.out.println(newServ.getTheMember(1234));
+        System.out.println(newServ.getTheMember(1001));
 
         /*------------------------------------getallMembers()-------------------------------------------------------*/
 
@@ -22,7 +22,7 @@ public class MainTest {
 
         for (Member memb : newServ.getAllMembers()) {
             System.out.print(memb);
-        }              /* Ej klart */
+        }
 
 
         /*------------------------------------getLoanID()-------------------------------------------------------*/

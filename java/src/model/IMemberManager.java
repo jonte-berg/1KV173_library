@@ -28,4 +28,12 @@ public interface IMemberManager {
 
     boolean searchForMember(int memberID);
 
+
+    /**
+     * Suspend member
+     * @param memberID
+     * @return boolean
+     */
+    boolean suspendMember(int memberID);
+
 }

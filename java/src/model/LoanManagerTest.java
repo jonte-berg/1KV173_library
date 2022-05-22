@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class LoanManagerTest {
@@ -26,22 +26,33 @@ class LoanManagerTest {
     }
 
     @Test
-    void searchForBookISBN() {
+    void searchForBookISBN_positive() {
         LoanService service = mock(LoanService.class);
         LoanManager manager = new LoanManager(service);
-        Book expected = new Book(112233, "Sagan om ringen", "Äventyr", 10, 10);
-
-        Book [] mocks = new Book[] {
-                new Book(112233, "Sagan om ringen", "Äventyr", 10, 10),
-                new Book(223344, "Hobbit", "Äventyr", 5, 10),
-                new Book(334455, "Elon Musk", "Biografi", 3, 10),
-                new Book(445566, "Harry Potter", "Äventyr", 15, 10)
-        };
 
 
-      //  when(service.getBookById(112233).thenReturn()
+
+       when(service.getBookById(1))
+               .thenReturn( new Book(1, " Sagan om Boken", "Äventyr", 2,2));
+
+        //finns
+        assertEquals(manager.searchForBookISBN(1),true);
 
 
+    }
+    @Test
+    void searchForBookISBN_negative() {
+        LoanService service = mock(LoanService.class);
+        LoanManager manager = new LoanManager(service);
+
+
+
+        when(service.getBookById(2))
+                .thenReturn( null);
+
+
+        //finns ingen bok med ID 2
+        assertNotEquals(manager.searchForBookISBN(2),true);
 
 
     }

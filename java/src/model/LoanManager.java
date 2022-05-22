@@ -10,12 +10,14 @@ public class LoanManager implements ILoanManager{
 
     @Override
     public boolean searchForBookISBN(int isbnNr) {
-        return false;
+
+        return service.getBookById(isbnNr) != null;
     }
 
     @Override
     public boolean searchForBookTitle(String title) {
-        return false;
+
+        return service.getBookByTitle(title) != null;
     }
 
     @Override

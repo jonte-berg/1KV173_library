@@ -2,13 +2,12 @@ package model;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 
 class MemberManagerTest {
 
@@ -51,16 +50,41 @@ class MemberManagerTest {
     }
 
     @Test
-    void updateMember() {
+    @DisplayName("This test should provide a true boolean")
+    void searchForMemberPositive() {
+
+        //  Setup
+        ArrayList<Member> mocks = new ArrayList<Member>();
+
+        mocks.add(new Member(5002, "John", "Doe", 0, 3, 0));
+        mocks.add(new Member(5003, "Bertil", "Doe", 0, 3, 0));
+        mocks.add(new Member(5004, "Magda", "Doe", 0, 3, 0));
+
+
+        // Assert and confirm
+        when(memberService.getAllMembers()).thenReturn(mocks);
+
+        assertTrue(mg.searchForMember(5002));
 
     }
 
     @Test
-    void suspendMember() {
-    }
+    @DisplayName("This test should provide a false boolean")
+    void searchForMemberNegative() {
 
-    @Test
-    void searchForMember() {
+        //  Setup
+        ArrayList<Member> mocks = new ArrayList<Member>();
+
+        mocks.add(new Member(5002, "John", "Doe", 0, 3, 0));
+        mocks.add(new Member(5003, "Bertil", "Doe", 0, 3, 0));
+        mocks.add(new Member(5004, "Magda", "Doe", 0, 3, 0));
+
+
+        // Assert and confirm
+        when(memberService.getAllMembers()).thenReturn(mocks);
+
+        assertFalse(mg.searchForMember(5005));
+
     }
 
 

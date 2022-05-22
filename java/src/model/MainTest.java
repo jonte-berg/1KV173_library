@@ -11,6 +11,13 @@ public class MainTest {
 
     public static void main(String[] args) throws SQLException {
 
+        /*------------------------------------searchForMember()-------------------------------------------------------*/
+        MemberService newServ4 = new MemberService();
+        MemberManager mg1 = new MemberManager(newServ4);
+
+        System.out.println(mg1.searchForMember(1001));
+        System.out.println(mg1.searchForMember(1005));
+
         /*------------------------------------addMember()-------------------------------------------------------*/
         /* MemberService newServ3 = new MemberService();
            Member newMember = new Member (1002,"John","Doe",0,3,0);

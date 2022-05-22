@@ -3,9 +3,6 @@ package model;
 import java.sql.*;
 import java.util.ArrayList;
 
-
-
-
 public class MemberService implements IMemberService {
 
     @Override
@@ -71,6 +68,7 @@ public class MemberService implements IMemberService {
         return memb;
     }
 
+    @Override
     public boolean addMember(Member newMember) {
 
         loadDrivers();
@@ -98,7 +96,7 @@ public class MemberService implements IMemberService {
 
         return false;
     }
-
+    @Override
     public boolean deleteMember(int memberID) {
 
         loadDrivers();

@@ -47,10 +47,4 @@ public class MemberManager implements IMemberManager {
         }
         return false;
     }
-
-    @Override
-    public boolean suspendMember(int memberID) {
-        return false;
-    }
-
 }

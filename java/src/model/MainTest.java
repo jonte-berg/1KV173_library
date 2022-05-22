@@ -1,6 +1,9 @@
 package model;
 
+import net.bytebuddy.asm.Advice;
+
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,8 +149,12 @@ public class MainTest {
             System.out.println("Boken finne inte i databasen.");
         }
 
-
-
+        /*------------------------------------addLoan()-------------------------------------------------------*/
+        //fungerar som den ska
+        LocalDate start= LocalDate.of(2022,06,10);
+        LocalDate end = LocalDate.of(2022,06,25);
+        Loan l1 = new Loan(6,4001, start,end,0);
+       // service3.addLoan(l1);
 
     }
 }

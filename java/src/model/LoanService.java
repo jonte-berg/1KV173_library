@@ -198,15 +198,60 @@ public class LoanService implements ILoanService {
 
 
     @Override
+
     public boolean addLoan(Loan loan) {
+
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+
+            PreparedStatement addLoan = conn.prepareStatement("INSERT INTO Loan VALUES (?,?,?,?)");
+
+            addLoan.setInt(1,loan.getLoanID());
+            addLoan.setDate(2, Date.valueOf(loan.getStartDate()));
+            addLoan.setDate(3, Date.valueOf(loan.getEndDate()));
+            addLoan.setInt(4,loan.getOverdue());
+
+            //skickar in lånet i LOAN table
+            int result = addLoan.executeUpdate();
+
+            //if successfull
+            if (result>0) {
+                System.out.println("Loan inserted successfully");
+
+                //preppa statement till hasLoan table
+                addLoan = conn.prepareStatement("INSERT INTO hasloan VALUES (?,?)");
+                addLoan.setInt(1,loan.getMemberID());
+                addLoan.setInt(2,loan.getLoanID());
+
+                //skickar in lånet i hasLoan table
+                result = addLoan.executeUpdate();
+
+                //returns true if successfull and false if not
+                return result > 0;
+            }
+            //if Fail
+            else
+                System.out.println("unsuccessful insertion ");
+
+        } catch (SQLException ex) {
+                System.out.println("Something went wrong...");
+        }
+
         return false;
+
+
     }
 
 
 
 
     @Override
-    public boolean deleteLoan(int loanID) {
+    public boolean deleteLoan(int loanID) { //jonte
         return false;
     }
 
@@ -218,8 +263,7 @@ public class LoanService implements ILoanService {
     public static void loadDrivers() {
         try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true
-            //System.out.println("Driver loaded");
+
         } catch (ClassNotFoundException ex) {
             System.out.println("Driver did not load");
         }

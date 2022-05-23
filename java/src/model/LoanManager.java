@@ -47,8 +47,17 @@ public class LoanManager implements ILoanManager{
 
     @Override
     public void issueFine(int membersID) {
+        MemberService service = new MemberService();
+        Member theMember = service.getTheMember(membersID);
+
+        if (theMember.getId() == membersID) {
+            theMember.setWarnings(theMember.getWarnings() + 1);
+
+            //Skulle behöva en metod typ updateMember() i memberService som bara tar och uppdaterar members uppgifter.
+        }
 
     }
+
 
 
 

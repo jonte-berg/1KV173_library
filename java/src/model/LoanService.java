@@ -243,6 +243,10 @@ public class LoanService implements ILoanService {
 
                     //skickar in loanID och ISBNnr i hasBook table
                     result = addLoan.executeUpdate();
+
+                    //Uppdaterar book tabellen genom att ta minus 1 på "available".
+                    updateBook(temp, -1);
+
                 }
 
 
@@ -261,6 +265,50 @@ public class LoanService implements ILoanService {
 
 
     }
+
+
+    public boolean updateBook(Book bookToUpdate, int plusOneOrMinusOne) {
+
+        String query = "UPDATE book " +
+                       "SET available = (?) " +
+                       "WHERE isbn = (?)";
+
+
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+            PreparedStatement pStatment = conn.prepareStatement(query);
+
+            pStatment.setInt(1,bookToUpdate.getAvailable() + plusOneOrMinusOne);
+            pStatment.setInt(2, bookToUpdate.getIsbn());
+
+
+            //Gör uppdateringen på book.
+            int result = pStatment.executeUpdate();
+
+
+            //if successfull
+            if (result>0) {
+                System.out.println("Book has been updated successfully");
+            }
+
+            //if Fail
+            else {
+                System.out.println("Unsuccessful book update ");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong when updating a book...");
+        }
+
+        return true;
+
+    }
+
 
 
 

@@ -176,9 +176,7 @@ public class MainTest {
         booksToLoan.add(100005);
         booksToLoan.add(100006);
 
-
         loanManager.addLoan(2001, booksToLoan);
-
 
 
     }

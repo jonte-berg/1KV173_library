@@ -107,8 +107,8 @@ public class MemberService implements IMemberService {
                 "Q1w2e3r4t5")) {
 
             Statement statement = conn.createStatement();
+            statement.execute("DELETE FROM hasloan WHERE memberID ="+memberID+"");
             statement.execute("DELETE FROM member WHERE memberID ="+memberID+"");
-
             System.out.println("Member with id: "+memberID+" is deleted");
             return true;
 

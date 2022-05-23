@@ -258,7 +258,38 @@ public class LoanService implements ILoanService {
 
 
 
+    public boolean updateDB(int loanID){
 
+        loadDrivers();
+
+     try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+           /*
+             //update member SET total_Warnings=1 where memberID=1001	1 row(s) affected
+
+            //Rows matched: 1  Changed: 1  Warnings: 0	0.016 sec
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE Member SET suspended = ?, total_Warnings = ? WHERE memberID = ?");
+
+            /*ps.setInt(1,member.isSuspended());
+            ps.setInt(2,member.getWarnings());
+            ps.setInt(3,member.getId());
+            ps.execute();
+
+
+            System.out.println("Member with ID: "+member.getId()+ " has been updated!");
+            return true;
+*/
+        } catch (SQLException ex) {
+
+            System.out.println("Something went wrong...");
+        }
+
+
+        return false;
+    }
 
 
     public static void loadDrivers() {

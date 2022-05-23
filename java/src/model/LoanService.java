@@ -122,6 +122,7 @@ public class LoanService implements ILoanService {
     @Override
     public ArrayList<Loan> getAllLoans(LocalDate startDate, LocalDate endDate) {
         ArrayList<Loan> allLoan = new ArrayList<>();
+        String query = "SELECT * FROM hasloan, loan";
 
         loadDrivers();
 
@@ -132,7 +133,7 @@ public class LoanService implements ILoanService {
 
 
             Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM hasloan, loan");
+            ResultSet result = statement.executeQuery(query);
 
 
             while (result.next()) {

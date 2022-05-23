@@ -22,14 +22,15 @@ public class MainTest {
         System.out.println(mg1.searchForMember(1005));
 
         /*------------------------------------addMember()-------------------------------------------------------*/
-       /*  MemberService newServ3 = new MemberService();
+        /* MemberService newServ3 = new MemberService();
+           MemberManager mg2 = new MemberManager(newServ3);
            Member newMember = new Member (1002,"John","Doe",0,3,0);
 
-           newServ3.addMember(newMember);          /* Lägga till John Doe */
+           mg2.addMember(newMember);          /* Lägga till John Doe */
 
         /*------------------------------------deleteMember()-------------------------------------------------------*/
 
-        /*  MemberService newServ5 = new MemberService();
+         /* MemberService newServ5 = new MemberService();
 
             newServ5.deleteMember(1002);          /* Ta bort John Doe */
 

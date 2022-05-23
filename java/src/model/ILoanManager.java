@@ -52,7 +52,7 @@ public interface ILoanManager {
     Delete a loan with a specifik loanID.
     1. Update books.
     2. Update member.
-    3. If loan is overdue -> issueFine -> getWarnings ->
+    3. If loan is overdue -> issueFine() -> getWarnings ->
             if warnings = 2 -> suspendMember()
             if warnings = 4 -> deleteMember()
     @para loanID
@@ -62,8 +62,23 @@ public interface ILoanManager {
     boolean deleteLoan(int loanID);
 
 
+
     void loanItems();
 
 
+    /*
+    Om ett lån är försenat plussar issueFine på 1 på warnings.
+    @para membersID
+    @return void
+     */
+
     void issueFine(int membersID);
+
+
+
+
+    boolean suspendMember(int membersID);
+
+
+
 }

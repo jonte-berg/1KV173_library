@@ -14,29 +14,48 @@ public class LoanManager implements ILoanManager{
         return service.getBookById(isbnNr) != null;
     }
 
+
+
     @Override
     public boolean searchForBookTitle(String title) {
 
         return service.getBookByTitle(title) != null;
     }
 
+
+
     @Override
     public boolean addLoan(int membersID, List<Integer> books) {
         return false;
     }
+
+
 
     @Override //deleteman JONTE
     public boolean deleteLoan(int loanID) {
         return false;
     }
 
+
+
     @Override
     public void loanItems() {
 
     }
 
+
+
     @Override
     public void issueFine(int membersID) {
 
     }
+
+
+
+    @Override
+    public boolean suspendMember(int membersID) {
+        return false;
+    }
+
+
 }

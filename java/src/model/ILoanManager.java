@@ -63,8 +63,6 @@ public interface ILoanManager {
 
 
 
-    void loanItems();
-
 
 
 

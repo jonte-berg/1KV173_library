@@ -66,18 +66,6 @@ public interface ILoanManager {
     void loanItems();
 
 
-    /*
-    Om ett lån är försenat plussar issueFine på 1 på warnings.
-    @para membersID
-    @return void
-     */
-
-    void issueFine(int membersID);
-
-
-
-
-    boolean suspendMember(int membersID);
 
 
 

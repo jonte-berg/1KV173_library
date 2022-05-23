@@ -232,6 +232,20 @@ public class LoanService implements ILoanService {
                 //skickar in lånet i hasLoan table
                 result = addLoan.executeUpdate();
 
+
+                //preppa statement till hasBook table
+                addLoan = conn.prepareStatement("INSERT INTO hasbook VALUES (?,?)");
+
+                for (int i = 0; i < loan.getBooks().size(); i++) {
+                    Book temp = loan.getBooks().get(i);
+                    addLoan.setInt(1,loan.getLoanID());
+                    addLoan.setInt(2, temp.getIsbn());
+
+                    //skickar in loanID och ISBNnr i hasBook table
+                    result = addLoan.executeUpdate();
+                }
+
+
                 //returns true if successfull and false if not
                 return result > 0;
             }

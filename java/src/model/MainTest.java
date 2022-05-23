@@ -157,6 +157,8 @@ public class MainTest {
         LocalDate end = LocalDate.of(2022,06,25);
         Loan l1 = new Loan(6,4001, start,end,0);
        // service3.addLoan(l1);
+        //Här testas bara att göra en instans av ett lån, inte själva metoden att skapa ett lån?
+
 
 
         /*------------------------------------update/fine/suspend MEMBER-------------------------------------------------------*/
@@ -164,5 +166,24 @@ public class MainTest {
 
         // mg1.issueFine(1001);
         // mg1.suspendMember(1001);
+
+
+        /*------------------------------------addLoan()-------------------------------------------------------*/
+        //Testar metoden addLoan() i LoanManager.
+
+        LoanManager loanManager = new LoanManager(service);
+        List<Integer> booksToLoan = new ArrayList<>();
+        booksToLoan.add(100005);
+        booksToLoan.add(100006);
+
+
+        loanManager.addLoan(2001, booksToLoan);
+
+
+
     }
+
+
+
+
 }

@@ -37,7 +37,7 @@ public interface IMemberManager {
     @return void
      */
 
-    void issueFine(int membersID);
+    boolean issueFine(int membersID);
 
 
 

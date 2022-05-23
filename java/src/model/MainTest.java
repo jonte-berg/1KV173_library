@@ -6,6 +6,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /*Här har vi en MainTest som vi kan göra olika tester för att visa/förklara saker på.*/
 
@@ -157,5 +158,11 @@ public class MainTest {
         Loan l1 = new Loan(6,4001, start,end,0);
        // service3.addLoan(l1);
 
+
+        /*------------------------------------update/fine/suspend MEMBER-------------------------------------------------------*/
+
+
+        // mg1.issueFine(1001);
+        // mg1.suspendMember(1001);
     }
 }

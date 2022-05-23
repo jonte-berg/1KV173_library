@@ -64,15 +64,19 @@ public class MemberManager implements IMemberManager {
 
 
     @Override
-    public void issueFine(int membersID) {
+    public boolean issueFine(int membersID) {
         MemberService service = new MemberService();
         Member theMember = service.getTheMember(membersID);
 
         if (theMember.getId() == membersID) {
+
             theMember.setWarnings(theMember.getWarnings() + 1);
 
-            //Skulle behöva en metod typ updateMember() i memberService som bara tar och uppdaterar members uppgifter.
+            return service.updateMember(theMember);
+
+
         }
+        return false;
 
     }
 
@@ -87,15 +91,16 @@ public class MemberManager implements IMemberManager {
         if (theMember.getId() == membersID) {
             theMember.setSuspended(1);
 
+
+            return service.updateMember(theMember);
+
             //Skulle behövt en updateMember() i memberService här också för att uppdatera i databasen.
             //Sen kom jag på att vi har ju inget sätt att ta bort en suspension. Borde finnas ett attribut som är typ suspendedUntil som håller en date.
             //så när någon vill göra ett lån som är suspended kollar den om suspended untill är mindre eller större än "dagens datum".
 
 
 
-            if (theMember.isSuspended() == 1) {
-                return true;
-            }
+
         }
 
         return false;

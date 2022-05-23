@@ -28,8 +28,29 @@ class MemberManagerTest {
     }
 
     @Test
-    void addMember() {
+    @DisplayName("This test should provide a true boolean")
+    void addMemberPositive() {
+        //Setup
         Member newMember = new Member (1634,"John","Doe",0,3,0);
+
+
+
+        //Assert and confirm
+        when(mg.addMember(newMember)).thenReturn(true);
+        assertTrue(mg.addMember(newMember));
+    }
+
+    @Test
+    @DisplayName("This test should provide a false boolean")
+    void addMemberNegative() {
+        //Setup
+        Member newMember = new Member (1634,"John","Doe",0,3,0);
+        Member failMember = new Member (1634,"Dummy","Doe",0,3,0);
+
+        //Assert and confirm
+        when(memberService.addMember(failMember)).thenReturn(false);
+
+        assertFalse(memberService.addMember(failMember));
 
     }
 

@@ -92,10 +92,10 @@ public class MemberService implements IMemberService {
         } catch (SQLException ex) {
 
             System.out.println("Something went wrong...");
+            return false;
         }
-
-        return false;
     }
+
     @Override
     public boolean deleteMember(int memberID) {
 

@@ -1,6 +1,9 @@
 package model;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 
 public class MemberManager implements IMemberManager {
@@ -17,9 +20,16 @@ public class MemberManager implements IMemberManager {
     @Override
     public boolean addMember(Member newMember) {
 
-        service.addMember(newMember);
+        Logger logger = LogManager.getLogger(MemberManager.class.getName());
 
-        return false;
+        if (service.addMember(newMember)) {
+            logger.info("A member has been added");
+            return true;
+        }
+        else {
+            logger.error("The member has failed to be added");
+            return false;
+        }
     }
 
     @Override

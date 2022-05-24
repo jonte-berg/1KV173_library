@@ -11,6 +11,9 @@ public class LoanManager implements ILoanManager{
     LoanService service = null;
     public LoanManager(LoanService aService) { service = aService; }
 
+    public LoanManager() {
+    }
+
 
     @Override
     public boolean searchForBookISBN(int isbnNr) {

@@ -3,6 +3,13 @@ package model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mockito;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -76,20 +83,41 @@ class LoanManagerTest {
         assertEquals(false, loanManager.searchForBookTitle("Sagan om ringen"));
     }
 
-    @Test
-    void addLoanPositive() {
 
 
+
+
+    @Test //Kollar så att metoden i LoanManager returnerar true om LoanService returnerar true.
+    void addLoanPositive() throws SQLException {
+        List<Integer> books = new ArrayList<>();
+        books.add(10006);
+
+        when (loanService.addLoan(any(Loan.class))).thenReturn(true);
+
+        assertEquals(true, loanManager.addLoan(10002, books));
     }
 
-    @Test
-    void addLoanNegative() {
+
+
+    @Test //Kollar så att metoden i LoanManager returnerar false om LoanService returnerar false.
+    void addLoanNegative() throws SQLException {
+        List<Integer> books = new ArrayList<>();
+        books.add(10006);
+
+        when (loanService.addLoan(any(Loan.class))).thenReturn(false);
+
+        assertEquals(false, loanManager.addLoan(10002, books));
     }
+
+
 
 
     @Test
     void deleteLoanPositive() {
     }
+
+
+
 
     @Test
     void deleteLoanNegative() {

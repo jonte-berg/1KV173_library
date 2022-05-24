@@ -1,5 +1,7 @@
 package model;
 
+import sun.util.resources.LocaleData;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -333,12 +335,88 @@ public class LoanService implements ILoanService {
 
 
 
+    public boolean issueFine(int  memberID){
 
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+           Statement statement = conn.createStatement();
+           ResultSet result = statement.executeQuery("Select total_Warnings FROM member where memberID="+memberID);
+           int warnings=0;
+
+           while(result.next()){
+                warnings = result.getInt(1);
+            }
+            result= null;
+           warnings++;
+           PreparedStatement ps;
+
+           //delete'a member
+           if ((warnings)>=4){
+
+                ps=conn.prepareStatement("DELETE from MEMBER WHERE memberID="+memberID);
+                if (ps.executeUpdate()>0) {
+                    System.out.println("Member reached warning limit, account is now terminated, contact a librarian for more information");
+
+                    return true;
+                }
+
+            }
+           //sista varningen
+           else if ((warnings)==3){
+
+               ps=conn.prepareStatement("UPDATE Member SET total_Warnings ="+warnings+ " WHERE memberID ="+memberID);
+                if(ps.executeUpdate()>0){
+                   System.out.println("Member now has 3 warnings, last chance before account termination");
+                   return true;
+               }
+            }
+
+           //skapa en suspension
+           else if((warnings)==2){
+
+               LocalDate today = LocalDate.now();
+               ps=conn.prepareStatement("UPDATE Member SET total_Warnings ="+warnings+", " +
+                                "suspendUntil ="+"'"+today.plusDays(15)+"'"+
+                                " WHERE memberID="+memberID);
+
+               if (ps.executeUpdate()>0) {
+                    System.out.println("Member now has 2 warnings, 15 day suspension starts NOW");
+                    return true;
+                }
+            }
+            else{
+
+                ps=conn.prepareStatement("UPDATE Member SET total_Warnings ="+warnings+ " WHERE memberID ="+memberID);
+                if(ps.executeUpdate()>0) {
+                    System.out.println("Member now has 1 warning");
+
+                    return true;
+                }
+
+            }
+
+
+
+
+
+            return false;
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong with issuing a fine..");
+        }
+
+        return false;
+    }
 
     @Override
     public boolean deleteLoan(int loanID) {
 
-        /*detta blir rörigt...bear with me, bör nog dela upp "arbetet" i denna metoden till två metoder */
+
 
         loadDrivers();
 
@@ -349,8 +427,7 @@ public class LoanService implements ILoanService {
 
 
             Statement statement = conn.createStatement();
-
-            int loanMember;  //vi lägger memberID i loanMember int - behövs senare IFALL overdue
+            int loanMember=0;  //vi lägger memberID i loanMember int - behövs senare IFALL overdue
             List<Integer> bookID = new ArrayList<Integer>();      // vi lägger book_ISBN i bookID int - behövs senare IFALL det ej finns andra exemplar AVAILABLE
 
             //vi hämtar memberID som är associerad med det angivna loanID, so far so good
@@ -361,20 +438,19 @@ public class LoanService implements ILoanService {
 
             }
 
-
-
-
-            //vi hämtar book_isbn som ör associerad med det angivna loanID, so far so good -------KAN DET BLI MER än 1 result?!
-             result=null;
+                 //vi hämtar book_isbn som ör associerad med det angivna loanID, so far so good -------KAN DET BLI MER än 1 result?!
+            result=null;
             result=statement.executeQuery("Select book_ISBN FROM hasBook WHERE loanID="+loanID);
 
             while(result.next()){
-                System.out.println("WHILE HAS NEXT");
+
                 bookID.add(result.getInt(1));
-                System.out.println(result.getInt(1));
+               // System.out.println("isbn: "+result.getInt(1)+ " added to loan");
 
             }
 
+
+            /* insert book++ code */
 
 
 
@@ -387,29 +463,22 @@ public class LoanService implements ILoanService {
                d1= result.getDate("endDate").toLocalDate();
                 System.out.println(result.getDate("endDate").toLocalDate());
             }
-            if ((d1.isAfter(LocalDate.now()))){
+//btw den är reverse nu, dvs fine OM INTE FÖRSENAD (för test purp)
+            if ((d1.isAfter(LocalDate.now())))
+                issueFine(loanMember);
 
 
-
-                   updateDB(loanID);
-
-
-
-
-
-
-            }
-
-
-            else{
-
-                //lös varning i membertabell
+                updateDB(loanID);
 
 
 
 
 
-            }
+
+
+
+
+
 
 
 
@@ -464,7 +533,7 @@ public class LoanService implements ILoanService {
          else
              System.out.println("error deleting from Loan");
 
-
+        return true;
         } catch (SQLException ex) {
 
             System.out.println("Something went wrong...");

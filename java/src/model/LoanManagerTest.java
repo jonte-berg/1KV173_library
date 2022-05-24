@@ -58,9 +58,9 @@ class LoanManagerTest {
     void searchForBookTitlePositive() {
 
         when(loanService.getBookByTitle("Sagan om ringen"))
-                .thenReturn( new Book(1, "Sagan om ringen", "Äventyr", 2,2));
+                .thenReturn(new Book(1, "Sagan om ringen", "Äventyr", 2,2));
 
-        //finns
+        //boken finns.
         assertEquals(true, loanManager.searchForBookTitle("Sagan om ringen"));
     }
 
@@ -72,7 +72,7 @@ class LoanManagerTest {
         when(loanService.getBookByTitle("Sagan om ringen"))
                 .thenReturn(null);
 
-        //finns
+        //boken finns inte.
         assertEquals(false, loanManager.searchForBookTitle("Sagan om ringen"));
     }
 

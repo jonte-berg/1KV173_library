@@ -41,18 +41,15 @@ public class LoanManager implements ILoanManager{
             listOfBooks.add(service.getBookById(i));
         }
 
-
-        //Lägger in lånet i databasen.
+        //Lägger in lånet i databasen och kollar så att lånet lades till, true/false.
         Loan aNewLoan = new Loan(membersID, listOfBooks);
-        service.addLoan(aNewLoan);
 
-        return true;
+        if (service.addLoan(aNewLoan)) {
+            return true;
+        } else
+            return false;
 
-        //Detta fungerar nu och den lägger in lånen och tillhörande information i alla tabller.
-        //Dock behöver vi korrigera så att böcker uppdateras
-        // Samt att members maxLoan inte överskrids (kanske sker i vår main?).
-
-
+        //Samt att members maxLoan inte överskrids (kanske sker i vår main?).
     }
 
 

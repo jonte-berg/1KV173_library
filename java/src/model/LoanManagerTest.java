@@ -11,20 +11,24 @@ class LoanManagerTest {
 
 
      LoanService loanService = mock(LoanService.class);
-     LoanManager lm = new LoanManager();
+     LoanManager loanManager = new LoanManager();
+
 
     @BeforeEach
     void setUp() {
         System.out.println("Setting it up! ....");
-        lm = new LoanManager(loanService);
+        loanManager = new LoanManager(loanService);
     }
+
 
     @AfterEach
     void tearDown() {
         System.out.println("Running: tearDown! ....");
-        lm = null;
-        assertNull(lm);
+        loanManager = null;
+        assertNull(loanManager);
     }
+
+
 
     @Test
     void searchForBookISBN_positive() {
@@ -33,8 +37,10 @@ class LoanManagerTest {
                .thenReturn( new Book(1, " Sagan om Boken", "Äventyr", 2,2));
 
         //finns
-        assertEquals(lm.searchForBookISBN(1),true);
+        assertEquals(loanManager.searchForBookISBN(1),true);
     }
+
+
 
     @Test
     void searchForBookISBN_negative() {
@@ -42,26 +48,44 @@ class LoanManagerTest {
         when(loanService.getBookById(2))
                 .thenReturn( null);
 
-
         //finns ingen bok med ID 2
-        assertNotEquals(lm.searchForBookISBN(2),true);
+        assertNotEquals(loanManager.searchForBookISBN(2),true);
     }
+
+
 
     @Test
     void searchForBookTitlePositive() {
+
+        when(loanService.getBookByTitle("Sagan om ringen"))
+                .thenReturn( new Book(1, "Sagan om ringen", "Äventyr", 2,2));
+
+        //finns
+        assertEquals(true, loanManager.searchForBookTitle("Sagan om ringen"));
     }
+
+
 
     @Test
     void searchForBookTitleNegative() {
+
+        when(loanService.getBookByTitle("Sagan om ringen"))
+                .thenReturn(null);
+
+        //finns
+        assertEquals(false, loanManager.searchForBookTitle("Sagan om ringen"));
     }
 
     @Test
     void addLoanPositive() {
+
+
     }
 
     @Test
     void addLoanNegative() {
     }
+
 
     @Test
     void deleteLoanPositive() {

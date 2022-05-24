@@ -381,8 +381,8 @@ public class LoanService implements ILoanService {
 
 
                 //steg 3 ta bort ur LOAN och ++ i boktabell
-               //  result = statement.executeQuery("SELECT available FROM Book WHERE isbn="+bookID);
-                        //++ i boktabell
+
+                // ++ i boktabell
                  for (int i = 0; i < bookID.size();i++) {
 
                      Book temp = getBookById(bookID.get(i));
@@ -392,7 +392,14 @@ public class LoanService implements ILoanService {
                     updateBook(temp.getIsbn(), 1);
 
                 }
-                 //delete sen färdig..........
+
+                 //ta bort ur loan tabell
+                if(statement.execute("Delete FROM Loan WHERE loanID ="+ loanID))
+                    System.out.println("Loan deleted from LOAN .....");
+                else
+                    System.out.println("Something went wrong with deleting from LOAN");
+
+
 
 
 

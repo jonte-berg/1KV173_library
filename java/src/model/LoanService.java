@@ -268,11 +268,19 @@ public class LoanService implements ILoanService {
     }
 
 
-    public boolean updateBook(int isbn, int plusOneOrMinusOne) {
+    public boolean updateBook(int isbn, int plusOrMinusOne) {
 
-        String query = "UPDATE book " +
-                       "SET available = (?) " +
-                       "WHERE isbn = (?)";
+        int available = 0;
+
+        String queryAvailable = "SELECT available " +
+                                "FROM Book " +
+                                "WHERE isbn = " + isbn + "";
+
+
+        String queryUpdate = "UPDATE book " +
+                             "SET available = (?) " +
+                             "WHERE isbn = (?)";
+
 
 
         loadDrivers();
@@ -283,37 +291,42 @@ public class LoanService implements ILoanService {
                 "Q1w2e3r4t5")) {
 
 
-            Statement pStatment =  conn.createStatement();
-            ResultSet resultSet = pStatment.executeQuery("SELECT available FROM Book WHERE isbn="+isbn);
 
-            int available= resultSet.getByte("available")+plusOneOrMinusOne;
+            //Hämtar hur många böcker som finns tillgängligt just nu och antingen plussar på 1 eller minus 1.
+                Statement statement = conn.createStatement();
+                ResultSet result = statement.executeQuery(queryAvailable);
 
-
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1,  available);
-            ps.setInt(2, isbn);
-
-
-            //Gör uppdateringen på book.
-            int result = ps.executeUpdate();
+                while (result.next()) {
+                    available = result.getInt("available") + plusOrMinusOne;
+                }
 
 
-            //if successfull
-            if (result>0) {
-                System.out.println("Book has been updated successfully");
-            }
 
-            //if Fail
-            else {
-                System.out.println("Unsuccessful book update ");
-            }
+                //Uppdaterar book med det nya antalet som är available.
+                PreparedStatement pStatment = conn.prepareStatement(queryUpdate);
+                pStatment.setInt(1,  available);
+                pStatment.setInt(2, isbn);
+
+                //Gör själva uppdateringen i DB.
+                int resultPS = pStatment.executeUpdate();
+
+
+
+                //if successful
+                if (resultPS>0) {
+                    System.out.println("Book has been updated successfully.");
+                }
+
+                //if Fail
+                else {
+                    System.out.println("Unsuccessful book update.");
+                }
 
         } catch (SQLException ex) {
             System.out.println("Something went wrong when updating a book...");
         }
 
         return true;
-
     }
 
 

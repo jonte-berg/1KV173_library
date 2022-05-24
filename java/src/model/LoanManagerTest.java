@@ -10,74 +10,65 @@ import static org.mockito.Mockito.*;
 class LoanManagerTest {
 
 
-   // LoanService loanService = mock(LoanService.class);
-    //LoanManager lm = new LoanManager(loanService);
+     LoanService loanService = mock(LoanService.class);
+     LoanManager lm = new LoanManager();
 
     @BeforeEach
     void setUp() {
-      //  System.out.println("Setting it up! ....");
-       // lm = new LoanManager(loanService);
+        System.out.println("Setting it up! ....");
+        lm = new LoanManager(loanService);
     }
 
     @AfterEach
     void tearDown() {
-        //System.out.println("Running: tearDown! ....");
-
+        System.out.println("Running: tearDown! ....");
+        lm = null;
+        assertNull(lm);
     }
 
     @Test
     void searchForBookISBN_positive() {
-        LoanService service = mock(LoanService.class);
-        LoanManager manager = new LoanManager(service);
 
-
-
-       when(service.getBookById(1))
+       when(loanService.getBookById(1))
                .thenReturn( new Book(1, " Sagan om Boken", "Äventyr", 2,2));
 
         //finns
-        assertEquals(manager.searchForBookISBN(1),true);
-
-
+        assertEquals(lm.searchForBookISBN(1),true);
     }
+
     @Test
     void searchForBookISBN_negative() {
-        LoanService service = mock(LoanService.class);
-        LoanManager manager = new LoanManager(service);
 
-
-
-        when(service.getBookById(2))
+        when(loanService.getBookById(2))
                 .thenReturn( null);
 
 
         //finns ingen bok med ID 2
-        assertNotEquals(manager.searchForBookISBN(2),true);
-
-
+        assertNotEquals(lm.searchForBookISBN(2),true);
     }
 
     @Test
-    void searchForBookTitle() {
+    void searchForBookTitlePositive() {
     }
 
     @Test
-    void addLoan() {
+    void searchForBookTitleNegative() {
     }
 
     @Test
-    void deleteLoan() {
-       // LoanService service = mock(LoanService.class);
-       // LoanManager manager = new LoanManager(service);
-      //  Book expected = new Book(112233, "Sagan om ringen", "Äventyr", 10, 10);
-       // Loan expectedLoan = new Loan()
+    void addLoanPositive() {
     }
 
     @Test
-    void loanItems() {
+    void addLoanNegative() {
     }
 
     @Test
-    void issueFine() {
+    void deleteLoanPositive() {
     }
+
+    @Test
+    void deleteLoanNegative() {
+    }
+
 }

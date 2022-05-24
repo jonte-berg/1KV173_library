@@ -231,7 +231,9 @@ public class LoanService implements ILoanService {
                 addLoan.setInt(2,loan.getLoanID());
 
                 //skickar in lånet i hasLoan table
+
                 result = addLoan.executeUpdate();
+
 
 
                 //preppa statement till hasBook table
@@ -349,72 +351,47 @@ public class LoanService implements ILoanService {
             Statement statement = conn.createStatement();
 
             int loanMember;  //vi lägger memberID i loanMember int - behövs senare IFALL overdue
-            List<Integer> bookID = null;      // vi lägger book_ISBN i bookID int - behövs senare IFALL det ej finns andra exemplar AVAILABLE
+            List<Integer> bookID = new ArrayList<Integer>();      // vi lägger book_ISBN i bookID int - behövs senare IFALL det ej finns andra exemplar AVAILABLE
 
             //vi hämtar memberID som är associerad med det angivna loanID, so far so good
             ResultSet result = statement.executeQuery("SELECT memberID FROM hasLoan WHERE loanID="+loanID);
-            loanMember=result.getInt("memberID");
+                 while(result.next()){
+                     loanMember=result.getInt(1);
+                     System.out.println((result.getInt(1)));
 
-            //vi hämtar book_isbn som ör associerad med det angivna loanID, so far so good -------KAN DET BLI MER än 1 result?!
-
-            result=statement.executeQuery("Select book_ISBN FROM hasBook WHERE loanID="+loanID);
-
-            while(result.next()){
-                bookID.add(result.getInt("book_ISBN"));
             }
 
 
-            //nu har vi tillgång till alla variabler vi kan behövas ha...nu börjar helvetet
+
+
+            //vi hämtar book_isbn som ör associerad med det angivna loanID, so far so good -------KAN DET BLI MER än 1 result?!
+             result=null;
+            result=statement.executeQuery("Select book_ISBN FROM hasBook WHERE loanID="+loanID);
+
+            while(result.next()){
+                System.out.println("WHILE HAS NEXT");
+                bookID.add(result.getInt(1));
+                System.out.println(result.getInt(1));
+
+            }
 
 
 
-            //steg 1 - ÄR LÅNET FÖRSENAT?
-            // OBS (om vi gör en procedur som sätter overdueBoolean i DB till true så fort endDate har passerat kan vi förenkla detta!)
+
+
+            result=null;
+            LocalDate d1=null;
             result=statement.executeQuery("Select endDate FROM Loan WHERE loanID="+loanID);
-            //true = slipper memberTable
-            //ifall DB endDate ÄR INNAN nuvarande tid
-            if ((result.getDate("endDate").toLocalDate().isAfter(LocalDate.now()))){
+
+            while(result.next()){
+               d1= result.getDate("endDate").toLocalDate();
+                System.out.println(result.getDate("endDate").toLocalDate());
+            }
+            if ((d1.isAfter(LocalDate.now()))){
 
 
 
-
-                //nu ska vi rensa allt som har med lånet att göra i DB's,
-                // steg 1 ta bort ur kopplingstabell hasLoan:
-
-                if(statement.execute("DELETE FROM hasloan WHERE loanID ="+loanID))
-                    System.out.println("Loan deleted from hasLoan...");
-                else
-                    System.out.println("Something went wrong with deleting from hasLoan");
-
-                // steg 2 ta bort ur kopplingstabell hasBook:
-                if(statement.execute("Delete FROM hasBook WHERE loanID ="+ loanID))
-                    System.out.println("Loan deleted from hasBook.....");
-                else
-                    System.out.println("Something went wrong with deleting from hasBook");
-
-
-                //steg 3 ta bort ur LOAN och ++ i boktabell
-
-                // ++ i boktabell
-                 for (int i = 0; i < bookID.size();i++) {
-
-                     Book temp = getBookById(bookID.get(i));
-
-
-                    //Uppdaterar book tabellen genom att ta + 1 på "available".
-                    updateBook(temp.getIsbn(), 1);
-
-                }
-
-                 //ta bort ur loan tabell
-                if(statement.execute("Delete FROM Loan WHERE loanID ="+ loanID))
-                    System.out.println("Loan deleted from LOAN .....");
-                else
-                    System.out.println("Something went wrong with deleting from LOAN");
-
-
-
-
+                   updateDB(loanID);
 
 
 
@@ -425,7 +402,11 @@ public class LoanService implements ILoanService {
 
 
             else{
+
                 //lös varning i membertabell
+
+
+
 
 
             }
@@ -437,7 +418,7 @@ public class LoanService implements ILoanService {
             return true;
         } catch (SQLException ex) {
 
-            System.out.println("Something went wrong...");
+            System.out.println("(CATCH BLOCK) Something went wrong...");
         }
 
 
@@ -454,22 +435,36 @@ public class LoanService implements ILoanService {
                 "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
                 "gruppD",
                 "Q1w2e3r4t5")) {
-           /*
-             //update member SET total_Warnings=1 where memberID=1001	1 row(s) affected
-
-            //Rows matched: 1  Changed: 1  Warnings: 0	0.016 sec
-            PreparedStatement ps = conn.prepareStatement(
-                    "UPDATE Member SET suspended = ?, total_Warnings = ? WHERE memberID = ?");
-
-            /*ps.setInt(1,member.isSuspended());
-            ps.setInt(2,member.getWarnings());
-            ps.setInt(3,member.getId());
-            ps.execute();
 
 
-            System.out.println("Member with ID: "+member.getId()+ " has been updated!");
-            return true;
-*/
+         System.out.println("VI ÄR REDO O DELET'a");
+
+         String delete = "DELETE FROM hasloan WHERE loanID ="+loanID;
+         PreparedStatement preparedStatement = conn.prepareStatement(delete);
+
+         if(preparedStatement.executeUpdate()>0)
+             System.out.println("Deleted from hasloan");
+         else
+             System.out.println("error deleting from hasloan");
+
+         delete= "DELETE FROM hasbook WHERE loanID="+loanID;
+        preparedStatement= conn.prepareStatement(delete);
+
+         if(preparedStatement.executeUpdate()>0)
+             System.out.println("Deleted from hasbook");
+         else
+             System.out.println("error deleting from hasbook");
+
+
+         delete= "DELETE FROM Loan WHERE loanID = "+loanID;
+         preparedStatement=conn.prepareStatement(delete);
+
+         if(preparedStatement.executeUpdate()>0)
+             System.out.println("Deleted from Loan");
+         else
+             System.out.println("error deleting from Loan");
+
+
         } catch (SQLException ex) {
 
             System.out.println("Something went wrong...");
@@ -481,7 +476,7 @@ public class LoanService implements ILoanService {
 
 
     public static void loadDrivers() {
-        try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)
+        try {     //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)
             Class.forName("com.mysql.cj.jdbc.Driver");
 
         } catch (ClassNotFoundException ex) {

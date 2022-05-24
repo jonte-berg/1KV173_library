@@ -3,6 +3,7 @@ package model;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoanService implements ILoanService {
 
@@ -245,7 +246,7 @@ public class LoanService implements ILoanService {
                     result = addLoan.executeUpdate();
 
                     //Uppdaterar book tabellen genom att ta minus 1 på "available".
-                    updateBook(temp, -1);
+                    updateBook(temp.getIsbn(), -1);
 
                 }
 
@@ -267,7 +268,7 @@ public class LoanService implements ILoanService {
     }
 
 
-    public boolean updateBook(Book bookToUpdate, int plusOneOrMinusOne) {
+    public boolean updateBook(int isbn, int plusOneOrMinusOne) {
 
         String query = "UPDATE book " +
                        "SET available = (?) " +
@@ -281,14 +282,20 @@ public class LoanService implements ILoanService {
                 "gruppD",
                 "Q1w2e3r4t5")) {
 
-            PreparedStatement pStatment = conn.prepareStatement(query);
 
-            pStatment.setInt(1,bookToUpdate.getAvailable() + plusOneOrMinusOne);
-            pStatment.setInt(2, bookToUpdate.getIsbn());
+            Statement pStatment =  conn.createStatement();
+            ResultSet resultSet = pStatment.executeQuery("SELECT available FROM Book WHERE isbn="+isbn);
+
+            int available= resultSet.getByte("available")+plusOneOrMinusOne;
+
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1,  available);
+            ps.setInt(2, isbn);
 
 
             //Gör uppdateringen på book.
-            int result = pStatment.executeUpdate();
+            int result = ps.executeUpdate();
 
 
             //if successfull
@@ -314,7 +321,106 @@ public class LoanService implements ILoanService {
 
 
     @Override
-    public boolean deleteLoan(int loanID) { //jonte
+    public boolean deleteLoan(int loanID) {
+
+        /*detta blir rörigt...bear with me, bör nog dela upp "arbetet" i denna metoden till två metoder */
+
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+
+            Statement statement = conn.createStatement();
+
+            int loanMember;  //vi lägger memberID i loanMember int - behövs senare IFALL overdue
+            List<Integer> bookID = null;      // vi lägger book_ISBN i bookID int - behövs senare IFALL det ej finns andra exemplar AVAILABLE
+
+            //vi hämtar memberID som är associerad med det angivna loanID, so far so good
+            ResultSet result = statement.executeQuery("SELECT memberID FROM hasLoan WHERE loanID="+loanID);
+            loanMember=result.getInt("memberID");
+
+            //vi hämtar book_isbn som ör associerad med det angivna loanID, so far so good -------KAN DET BLI MER än 1 result?!
+
+            result=statement.executeQuery("Select book_ISBN FROM hasBook WHERE loanID="+loanID);
+
+            while(result.next()){
+                bookID.add(result.getInt("book_ISBN"));
+            }
+
+
+            //nu har vi tillgång till alla variabler vi kan behövas ha...nu börjar helvetet
+
+
+
+            //steg 1 - ÄR LÅNET FÖRSENAT?
+            // OBS (om vi gör en procedur som sätter overdueBoolean i DB till true så fort endDate har passerat kan vi förenkla detta!)
+            result=statement.executeQuery("Select endDate FROM Loan WHERE loanID="+loanID);
+            //true = slipper memberTable
+            //ifall DB endDate ÄR INNAN nuvarande tid
+            if ((result.getDate("endDate").toLocalDate().isAfter(LocalDate.now()))){
+
+
+
+
+                //nu ska vi rensa allt som har med lånet att göra i DB's,
+                // steg 1 ta bort ur kopplingstabell hasLoan:
+
+                if(statement.execute("DELETE FROM hasloan WHERE loanID ="+loanID))
+                    System.out.println("Loan deleted from hasLoan...");
+                else
+                    System.out.println("Something went wrong with deleting from hasLoan");
+
+                // steg 2 ta bort ur kopplingstabell hasBook:
+                if(statement.execute("Delete FROM hasBook WHERE loanID ="+ loanID))
+                    System.out.println("Loan deleted from hasBook.....");
+                else
+                    System.out.println("Something went wrong with deleting from hasBook");
+
+
+                //steg 3 ta bort ur LOAN och ++ i boktabell
+               //  result = statement.executeQuery("SELECT available FROM Book WHERE isbn="+bookID);
+                        //++ i boktabell
+                 for (int i = 0; i < bookID.size();i++) {
+
+                     Book temp = getBookById(bookID.get(i));
+
+
+                    //Uppdaterar book tabellen genom att ta + 1 på "available".
+                    updateBook(temp.getIsbn(), 1);
+
+                }
+                 //delete sen färdig..........
+
+
+
+
+
+
+
+
+            }
+
+
+            else{
+                //lös varning i membertabell
+
+
+            }
+
+
+
+
+
+            return true;
+        } catch (SQLException ex) {
+
+            System.out.println("Something went wrong...");
+        }
+
+
         return false;
     }
 

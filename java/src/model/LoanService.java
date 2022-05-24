@@ -232,6 +232,24 @@ public class LoanService implements ILoanService {
                 //skickar in lånet i hasLoan table
                 result = addLoan.executeUpdate();
 
+
+                //preppa statement till hasBook table
+                addLoan = conn.prepareStatement("INSERT INTO hasbook VALUES (?,?)");
+
+                for (int i = 0; i < loan.getBooks().size(); i++) {
+                    Book temp = loan.getBooks().get(i);
+                    addLoan.setInt(1,loan.getLoanID());
+                    addLoan.setInt(2, temp.getIsbn());
+
+                    //skickar in loanID och ISBNnr i hasBook table
+                    result = addLoan.executeUpdate();
+
+                    //Uppdaterar book tabellen genom att ta minus 1 på "available".
+                    updateBook(temp, -1);
+
+                }
+
+
                 //returns true if successfull and false if not
                 return result > 0;
             }
@@ -249,6 +267,50 @@ public class LoanService implements ILoanService {
     }
 
 
+    public boolean updateBook(Book bookToUpdate, int plusOneOrMinusOne) {
+
+        String query = "UPDATE book " +
+                       "SET available = (?) " +
+                       "WHERE isbn = (?)";
+
+
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+            PreparedStatement pStatment = conn.prepareStatement(query);
+
+            pStatment.setInt(1,bookToUpdate.getAvailable() + plusOneOrMinusOne);
+            pStatment.setInt(2, bookToUpdate.getIsbn());
+
+
+            //Gör uppdateringen på book.
+            int result = pStatment.executeUpdate();
+
+
+            //if successfull
+            if (result>0) {
+                System.out.println("Book has been updated successfully");
+            }
+
+            //if Fail
+            else {
+                System.out.println("Unsuccessful book update ");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong when updating a book...");
+        }
+
+        return true;
+
+    }
+
+
+
 
 
     @Override
@@ -258,7 +320,38 @@ public class LoanService implements ILoanService {
 
 
 
+    public boolean updateDB(int loanID){
 
+        loadDrivers();
+
+     try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+           /*
+             //update member SET total_Warnings=1 where memberID=1001	1 row(s) affected
+
+            //Rows matched: 1  Changed: 1  Warnings: 0	0.016 sec
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE Member SET suspended = ?, total_Warnings = ? WHERE memberID = ?");
+
+            /*ps.setInt(1,member.isSuspended());
+            ps.setInt(2,member.getWarnings());
+            ps.setInt(3,member.getId());
+            ps.execute();
+
+
+            System.out.println("Member with ID: "+member.getId()+ " has been updated!");
+            return true;
+*/
+        } catch (SQLException ex) {
+
+            System.out.println("Something went wrong...");
+        }
+
+
+        return false;
+    }
 
 
     public static void loadDrivers() {

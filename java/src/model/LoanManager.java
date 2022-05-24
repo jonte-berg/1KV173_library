@@ -1,5 +1,9 @@
 package model;
 
+import org.junit.platform.commons.function.Try;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoanManager implements ILoanManager{
@@ -25,8 +29,27 @@ public class LoanManager implements ILoanManager{
 
 
     @Override
-    public boolean addLoan(int membersID, List<Integer> books) {
-        return false;
+    public boolean addLoan(int membersID, List<Integer> books) throws SQLException {
+
+        List<Book> listOfBooks = new ArrayList<>();
+
+        //Skapar bok objekt och stoppar in i en List<Book>
+        for (Integer i : books) {
+            listOfBooks.add(service.getBookById(i));
+        }
+
+
+        //Lägger in lånet i databasen.
+        Loan aNewLoan = new Loan(membersID, listOfBooks);
+        service.addLoan(aNewLoan);
+
+        return true;
+
+        //Detta fungerar nu och den lägger in lånen och tillhörande information i alla tabller.
+        //Dock behöver vi korrigera så att böcker uppdateras
+        // Samt att members maxLoan inte överskrids (kanske sker i vår main?).
+
+
     }
 
 
@@ -36,12 +59,6 @@ public class LoanManager implements ILoanManager{
         return false;
     }
 
-
-
-    @Override
-    public void loanItems() {
-
-    }
 
 
 

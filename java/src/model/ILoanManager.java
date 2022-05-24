@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ILoanManager {
@@ -43,7 +44,7 @@ public interface ILoanManager {
     @return boolean (true if the loan has been added. false if it didn't go through).
     */
 
-    boolean addLoan(int membersID, List<Integer> books);
+    boolean addLoan(int membersID, List<Integer> books) throws SQLException;
 
 
 
@@ -62,8 +63,6 @@ public interface ILoanManager {
     boolean deleteLoan(int loanID);
 
 
-
-    void loanItems();
 
 
 

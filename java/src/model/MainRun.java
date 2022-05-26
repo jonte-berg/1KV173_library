@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class MainRun {
@@ -11,35 +12,134 @@ public class MainRun {
         int option;
 
 
-        //Header
-        System.out.println("Library Management System \n==========================");
-
-
-        //Main- Meny-val
 
         do {
-            System.out.println("1. ");
-            System.out.println("2. ");
-            System.out.println("3. Exit");
-            System.out.print("\n==> ");
+
+            //Skriv ut menyn och registrera vilket val användaren gör.
+            printMainMenue();
             option = Integer.parseInt(input.nextLine());
             System.out.println();
 
-            if (option == 1) {
-                System.out.println("You have chosen 1");
+
+            switch(option) {
+                case 1:
+                    addNewMember();
+                    break;
+
+                case 2:
+                    System.out.println("You have chosen 2");
+                    break;
+
+                case 3:
+                    System.out.println("You have chosen 3!");
+                    break;
+
+                case 4:
+                    System.out.println("You have chosen 4!");
+                    break;
+
+                case 5:
+                    System.out.println("You have chosen 5!");
+                    break;
+
+                    default:
+                        System.out.println("Goodbye!");
             }
 
-
-            if (option == 2) {
-                System.out.println("You have chosen 2");
-            }
-
-            if (option == 3) {
-                System.out.println("Goodbye!");
-            }
-
-        } while (option != 3);
-
+        } while (option < 6 && option > 0);
 
     }
+
+
+
+
+    public static void printMainMenue() {
+        System.out.println("\nLibrary Management System \n==========================");
+
+        System.out.println("1. Add new member.");
+        System.out.println("2. Search for member.");
+        System.out.println("3. Search for book.");
+        System.out.println("4. Add loan.");
+        System.out.println("5. Delete loan.");
+        System.out.println("6. Exit");
+        System.out.print("\nEnter your choise: ");
+    }
+
+
+
+    public static void addNewMember() {
+        Scanner input = new Scanner(System.in);
+        MemberService service = new MemberService();
+        MemberManager memberManager = new MemberManager(service);
+
+        int id = 0, maxLoans = 0, memberType;
+        String sName, lName;
+
+
+        System.out.println("\n(1) - Add a new member. \n==========================");
+        System.out.print("First name: ");
+        sName = input.next();
+        System.out.print("Last name: ");
+        lName = input.next();
+
+
+        //Valet av medlems typ kommer köras tills man anger antingen 1, 2, 3 eller 4.
+        do {
+            System.out.println("1 = Undergraduate, 2 = Master, 3 = Phd 4 = Teacher ");
+            System.out.print("Enter member type:  ");
+            memberType = input.nextInt();
+
+            switch (memberType) {
+                case 1:
+                    maxLoans = 3;
+                    id = 1;
+                    break;
+
+                case 2:
+                    maxLoans = 5;
+                    id = 2;
+                    break;
+
+                case 3:
+                    maxLoans = 7;
+                    id = 3;
+                    break;
+
+                case 4:
+                    maxLoans = 10;
+                    id = 4;
+                    break;
+            }
+
+        } while (memberType < 1 || memberType > 4);
+
+
+        //Genererar fullt id efter vald första siffra (1, 2, 3 eller 4).
+        id = generateID(id);
+
+        Member newMember = new Member(id, sName, lName, 0, maxLoans, 0);
+        memberManager.addMember(newMember);
+
+    }
+
+
+    public static int generateID(int idStartsWith) {
+        //Skapar ett random membersID med hjälp av typen på medlem (1, 2, 3 eller 4) + en random sekvens på fyra siffror.
+        //Inte optimalt men good enough här. Det värsta som kan hända är att vi får error om det id redan finns.
+        //Men då är det bara att göra om processen, chansen är liten att man får samma id.
+
+        LocalTime time = LocalTime.now();
+        String nanoStr = String.valueOf(time.getNano());
+        StringBuilder uniqueID = new StringBuilder();
+
+        for (int i = 0; i < 4; i++) {
+            uniqueID.append(nanoStr.charAt(i));
+        }
+
+        return Integer.parseInt(idStartsWith + String.valueOf(uniqueID));
+    }
+
+
+
+
 }

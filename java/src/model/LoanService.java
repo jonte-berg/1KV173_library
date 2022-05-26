@@ -357,7 +357,14 @@ public class LoanService implements ILoanService {
 
            //delete'a member
            if ((warnings)>=4){
+                ArrayList<Loan> hasLoanDelete=getLoanByMember(memberID);
 
+                for(int i=0;i<hasLoanDelete.size();i++) {
+                    ps=conn.prepareStatement("DELETE from hasloan WHERE loanID="+hasLoanDelete.get(i).getLoanID());
+                    if (ps.executeUpdate()>0)
+                        System.out.println("kopplingstabell cleanse success");
+
+                }
                 ps=conn.prepareStatement("DELETE from MEMBER WHERE memberID="+memberID);
                 if (ps.executeUpdate()>0) {
                     System.out.println("Member reached warning limit, account is now terminated, contact a librarian for more information");
@@ -368,6 +375,8 @@ public class LoanService implements ILoanService {
             }
            //sista varningen
            else if ((warnings)==3){
+
+
 
                ps=conn.prepareStatement("UPDATE Member SET total_Warnings ="+warnings+ " WHERE memberID ="+memberID);
                 if(ps.executeUpdate()>0){
@@ -436,8 +445,7 @@ public class LoanService implements ILoanService {
                      loanMember=result.getInt(1);
                      System.out.println((result.getInt(1)));
 
-            }
-
+                 }
                  //vi hämtar book_isbn som ör associerad med det angivna loanID, so far so good -------KAN DET BLI MER än 1 result?!
             result=null;
             result=statement.executeQuery("Select book_ISBN FROM hasBook WHERE loanID="+loanID);
@@ -450,7 +458,7 @@ public class LoanService implements ILoanService {
             }
 
 
-            /* insert book++ code */
+
 
 
 
@@ -463,13 +471,19 @@ public class LoanService implements ILoanService {
                d1= result.getDate("endDate").toLocalDate();
                 System.out.println(result.getDate("endDate").toLocalDate());
             }
-//btw den är reverse nu, dvs fine OM INTE FÖRSENAD (för test purp)
-            if ((d1.isAfter(LocalDate.now())))
-                issueFine(loanMember);
 
 
-                updateDB(loanID);
 
+            if (!(d1.isAfter(LocalDate.now())))
+                if(issueFine(loanMember))
+                    if(updateDB(loanID)){
+                        for (int i=0;i<bookID.size();i++)
+                        updateBook(bookID.get(i),1);
+                    }
+            if(updateDB(loanID)) {
+                for (int i = 0; i < bookID.size(); i++)
+                    updateBook(bookID.get(i), 1);
+            }
 
 
 

@@ -78,13 +78,14 @@ public class MemberService implements IMemberService {
                 "gruppD",
                 "Q1w2e3r4t5")) {
 
-            PreparedStatement addMember = conn.prepareStatement("INSERT INTO Member VALUES (?,?,?,?,?,?)");
+            PreparedStatement addMember = conn.prepareStatement("INSERT INTO Member VALUES (?,?,?,?,?,?,?)");
             addMember.setInt(1,newMember.id);
             addMember.setString(2,newMember.sName);
             addMember.setString(3,newMember.lName);
             addMember.setInt(4,newMember.suspended);
             addMember.setInt(5,newMember.maxLoans);
             addMember.setInt(6,newMember.warnings);
+            addMember.setDate(7,null);
             addMember.executeUpdate();
 
             return true;

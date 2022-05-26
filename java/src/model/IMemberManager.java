@@ -30,20 +30,4 @@ public interface IMemberManager {
 
 
 
-
-    /*
-    Om ett lån är försenat plussar issueFine på 1 på warnings.
-    @para membersID
-    @return void
-     */
-
-    boolean issueFine(int membersID);
-
-
-
-
-    boolean suspendMember(int membersID);
-
-
-
 }

@@ -82,8 +82,8 @@ class MemberManagerTest {
                 .thenReturn( null);
 
         //3 finns inte, 4 finns inte
-        assertNotEquals(mg.deleteMember(3),true);
-        assertNotEquals(mg.deleteMember(4),true);
+        assertEquals(false,mg.deleteMember(3));
+        assertEquals(false,mg.deleteMember(4));
 
 
     }

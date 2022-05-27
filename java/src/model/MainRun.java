@@ -35,11 +35,12 @@ public class MainRun {
                     break;
 
                 case 4:
-                    System.out.println("You have chosen 4!");
+                    System.out.println("You have chosen 4!"); //
                     break;
 
                 case 5:
                     System.out.println("You have chosen 5!");
+                    deleteLoan();
                     break;
 
                     default:
@@ -174,7 +175,38 @@ public class MainRun {
 
     }
 
+public static void deleteLoan(){
 
+
+
+    Scanner input = new Scanner(System.in);
+    LoanService service = new LoanService();
+    LoanManager loanManager = new LoanManager(service);
+    boolean endLoop = false;
+
+    System.out.println("\n(5) - Delete a loan/Return book. \n==========================");
+    System.out.print("Enter loan id (5 digits): ");
+    int loanID = input.nextInt();
+
+
+
+
+    do {
+        if (loanManager.deleteLoan(loanID)) {
+            System.out.println("\nYES - The Loan with  id \"" + loanID + "\" is now deleted, book has been returned!.");
+            endLoop = true;
+
+        } else {
+            System.out.println("NO - The loan id \"" + loanID + "\" does NOT exist.");
+            System.out.print("Try again (0 to exit): ");
+            loanID = input.nextInt();
+
+            if (loanID == 0) {
+                endLoop = true;
+            }
+        }
+    } while (endLoop == false);
+}
 
 
     public static void searchForABook() {

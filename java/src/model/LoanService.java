@@ -437,7 +437,11 @@ public class LoanService implements ILoanService {
 
             //vi hämtar memberID som är associerad med det angivna loanID, so far so good
             ResultSet result = statement.executeQuery("SELECT memberID FROM hasLoan WHERE loanID="+loanID);
-                 while(result.next()){
+
+                 if (result.next()==false)
+                     return false;
+
+            while(result.next()){
                      loanMember=result.getInt(1);
                      System.out.println((result.getInt(1)));
 

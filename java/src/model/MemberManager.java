@@ -52,8 +52,7 @@ public class MemberManager implements IMemberManager {
         for (Member member : allMembers) {
             if (member.getId() == memberID) {
                 return true;
-            } else
-                return false;
+            }
         }
         return false;
     }

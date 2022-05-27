@@ -158,7 +158,7 @@ public class MainRun {
           //Frågar efter member id tills man hittat ett som finns eller att användaren väljer att avsluta.
        do {
            if (memberManager.searchForMember(membersID)) {
-               System.out.println("YES - The member id \"" + membersID + "\" exists.");
+               System.out.println("\nYES - The member id \"" + membersID + "\" exists.");
                endLoop = true;
 
            } else {
@@ -190,53 +190,53 @@ public class MainRun {
         System.out.print("Enter ISBN (6 digits) OR Title: ");
 
 
-        if (input.hasNextInt()) {
-            isbnNr = input.nextInt();
-        } else {
-            title = input.nextLine();
-        }
-
-
-
         do {
-            //boken finns
-            if (loanManager.searchForBookISBN(isbnNr) || loanManager.searchForBookTitle(title)) {
 
-                //om man sökt med isbn
-                if (isbnNr != 0) {
-                    System.out.println("YES - The book with ISBN \"" + isbnNr + "\" is available.");
-                }
-                //om man sökt med titel
-                else {
-                    System.out.println("YES - The book with title \"" + title + "\" is available.");
-                }
-                endLoop = true;
-
+            //inputs
+            if (input.hasNextInt()) {
+                isbnNr = input.nextInt();
+            } else {
+                title = input.nextLine();
             }
+
+
+
+
+            //isbn finns
+            if (isbnNr != 0 && loanManager.searchForBookISBN(isbnNr)) {
+                    System.out.println("\nYES - The book with ISBN \"" + isbnNr + "\" is available.");
+                    endLoop = true;
+                }
+
+            //titel finns
+            else if (title != "" && loanManager.searchForBookTitle(title) ) {
+                    System.out.println("\nYES - The book \"" + title + "\" is available.");
+                    endLoop = true;
+            }
+
+            else if (isbnNr == -1){
+                endLoop = true;
+            }
+
+
 
             //boken finns inte
             else {
-
                 if (isbnNr != 0) {
-                    System.out.println("NO - book with ISBN \"" + isbnNr + "\" is NOT available.");
-                    System.out.print("Try again (0 to exit): ");
+                    System.out.println("NO - A book with ISBN \"" + isbnNr + "\" is NOT available.");
+                    System.out.print("Try again (-1 to exit): ");
                 }
-                else {
-                    System.out.println("NO - book with titel \"" + title + "\" is NOT available.");
-                    System.out.print("Try again (0 to exit): ");
-                }
+                else if (!title.equals("")){
+                    System.out.println("NO - A book with titel \"" + title + "\" is NOT available.");
+                    System.out.print("Try again (-1 to exit): ");
 
-                if (input.hasNextInt()) {
-                    isbnNr = input.nextInt();
-                } else {
-                    title = input.nextLine();
                 }
+                //"nollställer"
+                isbnNr = 0;
+                title = "";
             }
 
         } while (endLoop == false);
-
-
-
 
     }
 }

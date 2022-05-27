@@ -1,7 +1,5 @@
 package model;
 
-import sun.util.resources.LocaleData;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ public class LoanService implements ILoanService {
     @Override
     public Book getBookById(int isbnNr) {
         Book theBook = null;
-        String query = "SELECT * FROM book WHERE isbn = " + isbnNr +"";
+        String query = "SELECT * FROM book WHERE isbn = " + isbnNr;
 
         loadDrivers();
 
@@ -203,7 +201,7 @@ public class LoanService implements ILoanService {
 
     @Override
 
-    public boolean addLoan(Loan loan) {
+    public boolean addLoan(Loan loan){
 
         loadDrivers();
 
@@ -261,13 +259,11 @@ public class LoanService implements ILoanService {
             //if Fail
             else
                 System.out.println("unsuccessful insertion ");
-
-        } catch (SQLException ex) {
+            } catch (SQLException ex) {
                 System.out.println("Something went wrong...");
         }
 
         return false;
-
 
     }
 

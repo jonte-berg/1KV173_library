@@ -27,7 +27,7 @@ public class MainRun {
                     break;
 
                 case 2:
-                    System.out.println("You have chosen 2"); //Robin jobbar på denna.
+                    searchForAMember(); //Robin klar med denna. (kan förbättras genom att ej tillåta strängar)
                     break;
 
                 case 3:
@@ -141,7 +141,38 @@ public class MainRun {
 
 
 
+   public static void searchForAMember() {
+       Scanner input = new Scanner(System.in);
+       MemberService service = new MemberService();
+       MemberManager memberManager = new MemberManager(service);
+       boolean endLoop = false;
 
+
+       // Förbättringsmöjligheter - Vi skulle kunna lägga till någon ting för att förhindra strängar.
+       System.out.println("\n(2) - Search for a member. \n==========================");
+           System.out.print("Enter member id (5 digits): ");
+          int membersID = input.nextInt();
+
+
+
+          //Frågar efter member id tills man hittat ett som finns eller att användaren väljer att avsluta.
+       do {
+           if (memberManager.searchForMember(membersID)) {
+               System.out.println("YES - The member id \"" + membersID + "\" exists.");
+               endLoop = true;
+
+           } else {
+               System.out.println("NO - The member id \"" + membersID + "\" do NOT exist.");
+               System.out.print("Try again (0 to exit): ");
+               membersID = input.nextInt();
+
+               if (membersID == 0) {
+                   endLoop = true;
+               }
+           }
+       } while (endLoop == false);
+
+    }
 
 
 

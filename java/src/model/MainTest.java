@@ -173,15 +173,12 @@ public class MainTest {
 
         LoanManager loanManager = new LoanManager(service);
         List<Integer> booksToLoan = new ArrayList<>();
+        booksToLoan.add(100000);
         booksToLoan.add(100005);
-        booksToLoan.add(100006);
 
-        loanManager.addLoan(2001, booksToLoan);
+        loanManager.addLoan(4001, booksToLoan);
 
 
     }
-
-
-
 
 }

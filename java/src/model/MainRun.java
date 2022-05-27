@@ -23,11 +23,11 @@ public class MainRun {
 
             switch(option) {
                 case 1:
-                    addNewMember();
+                    addNewMember(); //Robin klar med denna
                     break;
 
                 case 2:
-                    System.out.println("You have chosen 2");
+                    System.out.println("You have chosen 2"); //Robin jobbar på denna.
                     break;
 
                 case 3:
@@ -138,6 +138,10 @@ public class MainRun {
 
         return Integer.parseInt(idStartsWith + String.valueOf(uniqueID));
     }
+
+
+
+
 
 
 

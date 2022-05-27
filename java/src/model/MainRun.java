@@ -31,7 +31,7 @@ public class MainRun {
                     break;
 
                 case 3:
-                    System.out.println("You have chosen 3!");
+                    searchForABook(); //Robin jobbar på denna.
                     break;
 
                 case 4:
@@ -177,4 +177,66 @@ public class MainRun {
 
 
 
+    public static void searchForABook() {
+        Scanner input = new Scanner(System.in);
+        LoanService service = new LoanService();
+        LoanManager loanManager = new LoanManager(service);
+        boolean endLoop = false;
+        int isbnNr = 0;
+        String title = "";
+
+
+        System.out.println("\n(3) - Search for a book. \n==========================");
+        System.out.print("Enter ISBN (6 digits) OR Title: ");
+
+
+        if (input.hasNextInt()) {
+            isbnNr = input.nextInt();
+        } else {
+            title = input.nextLine();
+        }
+
+
+
+        do {
+            //boken finns
+            if (loanManager.searchForBookISBN(isbnNr) || loanManager.searchForBookTitle(title)) {
+
+                //om man sökt med isbn
+                if (isbnNr != 0) {
+                    System.out.println("YES - The book with ISBN \"" + isbnNr + "\" is available.");
+                }
+                //om man sökt med titel
+                else {
+                    System.out.println("YES - The book with title \"" + title + "\" is available.");
+                }
+                endLoop = true;
+
+            }
+
+            //boken finns inte
+            else {
+
+                if (isbnNr != 0) {
+                    System.out.println("NO - book with ISBN \"" + isbnNr + "\" is NOT available.");
+                    System.out.print("Try again (0 to exit): ");
+                }
+                else {
+                    System.out.println("NO - book with titel \"" + title + "\" is NOT available.");
+                    System.out.print("Try again (0 to exit): ");
+                }
+
+                if (input.hasNextInt()) {
+                    isbnNr = input.nextInt();
+                } else {
+                    title = input.nextLine();
+                }
+            }
+
+        } while (endLoop == false);
+
+
+
+
+    }
 }

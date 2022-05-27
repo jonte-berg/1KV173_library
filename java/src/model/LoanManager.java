@@ -35,8 +35,6 @@ public class LoanManager implements ILoanManager {
     @Override
     public boolean searchForBookTitle(String title) {
 
-        //return service.getBookByTitle(title) != null;
-
         Book theBook = service.getBookByTitle(title);
 
         if (theBook != null && theBook.getAvailable() > 0) {

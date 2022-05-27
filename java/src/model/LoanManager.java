@@ -6,10 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoanManager implements ILoanManager{
+public class LoanManager implements ILoanManager {
 
     LoanService service = null;
-    public LoanManager(LoanService aService) { service = aService; }
+
+    public LoanManager(LoanService aService) {
+        service = aService;
+    }
 
     public LoanManager() {
     }
@@ -17,8 +20,14 @@ public class LoanManager implements ILoanManager{
 
     @Override
     public boolean searchForBookISBN(int isbnNr) {
+        Book theBook = service.getBookById(isbnNr);
 
-        return service.getBookById(isbnNr) != null;
+        if (theBook != null && theBook.getAvailable() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 
@@ -26,7 +35,15 @@ public class LoanManager implements ILoanManager{
     @Override
     public boolean searchForBookTitle(String title) {
 
-        return service.getBookByTitle(title) != null;
+        //return service.getBookByTitle(title) != null;
+
+        Book theBook = service.getBookByTitle(title);
+
+        if (theBook != null && theBook.getAvailable() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

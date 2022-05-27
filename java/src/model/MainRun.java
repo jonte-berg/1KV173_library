@@ -31,7 +31,7 @@ public class MainRun {
                     break;
 
                 case 3:
-                    System.out.println("You have chosen 3!");
+                    System.out.println("You have chosen 3!"); //Robin jobbar på denna.
                     break;
 
                 case 4:

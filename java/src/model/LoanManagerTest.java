@@ -44,9 +44,8 @@ class LoanManagerTest {
                .thenReturn( new Book(1, " Sagan om Boken", "Äventyr", 2,2));
 
         //finns
-        assertEquals(loanManager.searchForBookISBN(1),true);
+        assertEquals(true, loanManager.searchForBookISBN(1));
     }
-
 
 
     @Test
@@ -56,7 +55,18 @@ class LoanManagerTest {
                 .thenReturn( null);
 
         //finns ingen bok med ID 2
-        assertNotEquals(loanManager.searchForBookISBN(2),true);
+        assertNotEquals(true, loanManager.searchForBookISBN(2));
+    }
+
+
+    @Test
+    void searchForBookISBN_negativeNotAvailable() {
+
+        when(loanService.getBookById(1))
+                .thenReturn( new Book(1, " Sagan om Boken", "Äventyr", 2,0));
+
+        //finns men available är mindre än 1.
+        assertNotEquals(true, loanManager.searchForBookISBN(1));
     }
 
 
@@ -80,9 +90,19 @@ class LoanManagerTest {
                 .thenReturn(null);
 
         //boken finns inte.
-        assertEquals(false, loanManager.searchForBookTitle("Sagan om ringen"));
+        assertNotEquals(true, loanManager.searchForBookTitle("Sagan om ringen"));
     }
 
+
+    @Test
+    void searchForBookTitleNegativeNotAvailable() {
+
+        when(loanService.getBookByTitle("Sagan om ringen"))
+                .thenReturn(new Book(1, "Sagan om ringen", "Äventyr", 2,0));
+
+        //boken finns men available är mindre än 1.
+        assertNotEquals(true, loanManager.searchForBookTitle("Sagan om ringen"));
+    }
 
 
 

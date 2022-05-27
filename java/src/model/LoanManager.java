@@ -54,9 +54,12 @@ public class LoanManager implements ILoanManager{
 
 
 
-    @Override //deleteman JONTE
+    @Override
     public boolean deleteLoan(int loanID) {
-        return false;
+
+        return service.deleteLoan(loanID);
+
+
     }
 
 

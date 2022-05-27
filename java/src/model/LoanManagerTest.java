@@ -113,7 +113,12 @@ class LoanManagerTest {
 
 
     @Test
-    void deleteLoanPositive() {
+    void deleteLoanPositive()  {
+
+        when(loanService.deleteLoan(any(Integer.class))).thenReturn(true);
+
+        assertEquals(true,loanManager.deleteLoan(40015877));
+
     }
 
 
@@ -121,6 +126,11 @@ class LoanManagerTest {
 
     @Test
     void deleteLoanNegative() {
+
+        when(loanService.deleteLoan(any(Integer.class))).thenReturn(false);
+
+        assertEquals(false,loanManager.deleteLoan(1));
+
     }
 
 }

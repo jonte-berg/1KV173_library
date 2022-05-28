@@ -372,8 +372,6 @@ public class LoanService implements ILoanService {
            //sista varningen
            else if ((warnings)==3){
 
-
-
                ps=conn.prepareStatement("UPDATE Member SET total_Warnings ="+warnings+ " WHERE memberID ="+memberID);
                 if(ps.executeUpdate()>0){
                    System.out.println("Member now has 3 warnings, last chance before account termination");
@@ -402,12 +400,7 @@ public class LoanService implements ILoanService {
 
                     return true;
                 }
-
             }
-
-
-
-
 
             return false;
 
@@ -420,8 +413,6 @@ public class LoanService implements ILoanService {
 
     @Override
     public boolean deleteLoan(int loanID) {
-
-
 
         loadDrivers();
 
@@ -457,12 +448,6 @@ public class LoanService implements ILoanService {
 
             }
 
-
-
-
-
-
-
             result=null;
             LocalDate d1=null;
             result=statement.executeQuery("Select endDate FROM Loan WHERE loanID="+loanID);
@@ -471,8 +456,6 @@ public class LoanService implements ILoanService {
                d1= result.getDate("endDate").toLocalDate();
                 System.out.println(result.getDate("endDate").toLocalDate());
             }
-
-
 
             if (!(d1.isAfter(LocalDate.now())))
                 if(issueFine(loanMember))
@@ -485,25 +468,11 @@ public class LoanService implements ILoanService {
                     updateBook(bookID.get(i), 1);
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             return true;
         } catch (SQLException ex) {
 
             System.out.println("(CATCH BLOCK) Something went wrong...");
         }
-
 
         return false;
     }

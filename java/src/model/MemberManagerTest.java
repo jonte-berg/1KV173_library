@@ -4,7 +4,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,28 +33,27 @@ class MemberManagerTest {
 
     @Test
     @DisplayName("This test should provide a true boolean")
-    void addMemberPositive() {
+    void addMemberPositive() throws SQLException {
         //Setup
-        Member newMember = new Member (1634,"John","Doe",0,3,0);
-
+        Member nw1 = new Member (10000, "John", "Doe",0,3,0);
 
 
         //Assert and confirm
-        when(memberService.addMember(newMember)).thenReturn(true);
-        assertTrue(mg.addMember(newMember));
+        when(memberService.addMember(any(Member.class))).thenReturn(true);
+        assertEquals(true, mg.addMember(nw1));
     }
 
     @Test
     @DisplayName("This test should provide a false boolean")
-    void addMemberNegative() {
-        //Setup
-        Member newMember = new Member ();
+    void addMemberNegative() throws SQLException {
 
+        //Setup
+        Member nw1 = new Member ();
 
 
         //Assert and confirm
-        when(memberService.addMember(newMember)).thenReturn(false);
-        assertFalse(mg.addMember(newMember));
+        when(memberService.addMember(any(Member.class))).thenReturn(false);
+        assertEquals(false, mg.addMember(nw1));
 
     }
 

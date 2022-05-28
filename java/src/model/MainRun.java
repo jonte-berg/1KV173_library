@@ -1,6 +1,8 @@
 package model;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainRun {
@@ -231,12 +233,16 @@ public class MainRun {
     }
 
 public static void addLoan() {
+    Scanner input = new Scanner(System.in);
+    LoanService service = new LoanService();
+    LoanManager loanManager = new LoanManager(service);
+    List<Book> listOfBooks = new ArrayList<>();
+    boolean endLoop = false;
 
+    System.out.println("\n(5) - Add Loan. \n==========================");
 }
 
 public static void deleteLoan(){
-
-
 
     Scanner input = new Scanner(System.in);
     LoanService service = new LoanService();

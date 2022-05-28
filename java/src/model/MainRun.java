@@ -11,12 +11,10 @@ public class MainRun {
         Scanner input = new Scanner(System.in);
         int option;
 
-
-
         do {
 
             //Skriv ut menyn och registrera vilket val användaren gör.
-            printMainMenue();
+            printMainMenu();
             option = Integer.parseInt(input.nextLine());
             System.out.println();
 
@@ -27,19 +25,22 @@ public class MainRun {
                     break;
 
                 case 2:
-                    searchForAMember(); //Robin klar med denna. (kan förbättras genom att ej tillåta strängar)
+                    deleteMember(); // Klar Dennis
                     break;
 
                 case 3:
-                    searchForABook(); //Robin jobbar på denna.
+                    searchForAMember(); //Robin klar med denna. (kan förbättras genom att ej tillåta strängar)
                     break;
 
                 case 4:
-                    System.out.println("You have chosen 4!"); //
+                    searchForABook(); //Robin jobbar på denna.
                     break;
 
                 case 5:
-                    System.out.println("You have chosen 5!");
+                    addLoan(); // Ej klar
+                    break;
+
+                case 6:
                     deleteLoan();
                     break;
 
@@ -47,26 +48,9 @@ public class MainRun {
                         System.out.println("Goodbye!");
             }
 
-        } while (option < 6 && option > 0);
+        } while (option < 7 && option > 0);
 
     }
-
-
-
-
-    public static void printMainMenue() {
-        System.out.println("\nLibrary Management System \n==========================");
-
-        System.out.println("1. Add new member.");
-        System.out.println("2. Search for member.");
-        System.out.println("3. Search for book.");
-        System.out.println("4. Add loan.");
-        System.out.println("5. Delete loan.");
-        System.out.println("6. Exit");
-        System.out.print("\nEnter your choise: ");
-    }
-
-
 
     public static void addNewMember() {
         Scanner input = new Scanner(System.in);
@@ -123,24 +107,35 @@ public class MainRun {
 
     }
 
+    public static void deleteMember() {
 
-    public static int generateID(int idStartsWith) {
-        //Skapar ett random membersID med hjälp av typen på medlem (1, 2, 3 eller 4) + en random sekvens på fyra siffror.
-        //Inte optimalt men good enough här. Det värsta som kan hända är att vi får error om det id redan finns.
-        //Men då är det bara att göra om processen, chansen är liten att man får samma id.
+            Scanner input = new Scanner(System.in);
+            MemberService service = new MemberService();
+            MemberManager memberManager = new MemberManager(service);
+            boolean endLoop = false;
 
-        LocalTime time = LocalTime.now();
-        String nanoStr = String.valueOf(time.getNano());
-        StringBuilder uniqueID = new StringBuilder();
+            System.out.println("\n(2) - Delete a member. \n==========================");
+            System.out.print("Enter member id (5 digits): ");
+            int memberID = input.nextInt();
 
-        for (int i = 0; i < 4; i++) {
-            uniqueID.append(nanoStr.charAt(i));
-        }
 
-        return Integer.parseInt(idStartsWith + String.valueOf(uniqueID));
+            do {
+                if (memberManager.deleteMember(memberID)) {
+                    System.out.println("\nYES - The member with id \"" + memberID + "\" is now deleted!");
+                    endLoop = true;
+
+                } else {
+                    System.out.println("NO - The member id \"" + memberID + "\" does NOT exist.");
+                    System.out.print("Try again (0 to exit): ");
+                    memberID = input.nextInt();
+
+                    if (memberID == 0) {
+                        endLoop = true;
+                    }
+                }
+            } while (endLoop == false);
+
     }
-
-
 
    public static void searchForAMember() {
        Scanner input = new Scanner(System.in);
@@ -150,7 +145,7 @@ public class MainRun {
 
 
        // Förbättringsmöjligheter - Vi skulle kunna lägga till någon ting för att förhindra strängar.
-       System.out.println("\n(2) - Search for a member. \n==========================");
+       System.out.println("\n(3) - Search for a member. \n==========================");
            System.out.print("Enter member id (5 digits): ");
           int membersID = input.nextInt();
 
@@ -175,40 +170,6 @@ public class MainRun {
 
     }
 
-public static void deleteLoan(){
-
-
-
-    Scanner input = new Scanner(System.in);
-    LoanService service = new LoanService();
-    LoanManager loanManager = new LoanManager(service);
-    boolean endLoop = false;
-
-    System.out.println("\n(5) - Delete a loan/Return book. \n==========================");
-    System.out.print("Enter loan id (5 digits): ");
-    int loanID = input.nextInt();
-
-
-
-
-    do {
-        if (loanManager.deleteLoan(loanID)) {
-            System.out.println("\nYES - The Loan with  id \"" + loanID + "\" is now deleted, book has been returned!.");
-            endLoop = true;
-
-        } else {
-            System.out.println("NO - The loan id \"" + loanID + "\" does NOT exist.");
-            System.out.print("Try again (0 to exit): ");
-            loanID = input.nextInt();
-
-            if (loanID == 0) {
-                endLoop = true;
-            }
-        }
-    } while (endLoop == false);
-}
-
-
     public static void searchForABook() {
         Scanner input = new Scanner(System.in);
         LoanService service = new LoanService();
@@ -218,7 +179,7 @@ public static void deleteLoan(){
         String title = "";
 
 
-        System.out.println("\n(3) - Search for a book. \n==========================");
+        System.out.println("\n(4) - Search for a book. \n==========================");
         System.out.print("Enter ISBN (6 digits) OR Title: ");
 
 
@@ -232,24 +193,21 @@ public static void deleteLoan(){
             }
 
 
-
-
             //isbn finns
             if (isbnNr != 0 && loanManager.searchForBookISBN(isbnNr)) {
-                    System.out.println("\nYES - The book with ISBN \"" + isbnNr + "\" is available.");
-                    endLoop = true;
-                }
+                System.out.println("\nYES - The book with ISBN \"" + isbnNr + "\" is available.");
+                endLoop = true;
+            }
 
             //titel finns
             else if (title != "" && loanManager.searchForBookTitle(title) ) {
-                    System.out.println("\nYES - The book \"" + title + "\" is available.");
-                    endLoop = true;
+                System.out.println("\nYES - The book \"" + title + "\" is available.");
+                endLoop = true;
             }
 
             else if (isbnNr == -1){
                 endLoop = true;
             }
-
 
 
             //boken finns inte
@@ -270,5 +228,68 @@ public static void deleteLoan(){
 
         } while (endLoop == false);
 
+    }
+
+public static void addLoan() {
+
+}
+
+public static void deleteLoan(){
+
+
+
+    Scanner input = new Scanner(System.in);
+    LoanService service = new LoanService();
+    LoanManager loanManager = new LoanManager(service);
+    boolean endLoop = false;
+
+    System.out.println("\n(6) - Delete a loan/Return book. \n==========================");
+    System.out.print("Enter loan id (5 digits): ");
+    int loanID = input.nextInt();
+
+    do {
+        if (loanManager.deleteLoan(loanID)) {
+            System.out.println("\nYES - The Loan with  id \"" + loanID + "\" is now deleted, book has been returned!.");
+            endLoop = true;
+
+        } else {
+            System.out.println("NO - The loan id \"" + loanID + "\" does NOT exist.");
+            System.out.print("Try again (0 to exit): ");
+            loanID = input.nextInt();
+
+            if (loanID == 0) {
+                endLoop = true;
+            }
+        }
+    } while (endLoop == false);
+}
+
+    public static void printMainMenu() {
+        System.out.println("\nLibrary Management System \n==========================");
+
+        System.out.println("1. Add new member.");
+        System.out.println("2. Delete member.");
+        System.out.println("3. Search for member.");
+        System.out.println("4. Search for book.");
+        System.out.println("5. Add loan.");
+        System.out.println("6. Delete loan.");
+        System.out.println("7. Exit");
+        System.out.print("\nEnter your choice: ");
+    }
+
+    public static int generateID(int idStartsWith) {
+        //Skapar ett random membersID med hjälp av typen på medlem (1, 2, 3 eller 4) + en random sekvens på fyra siffror.
+        //Inte optimalt men good enough här. Det värsta som kan hända är att vi får error om det id redan finns.
+        //Men då är det bara att göra om processen, chansen är liten att man får samma id.
+
+        LocalTime time = LocalTime.now();
+        String nanoStr = String.valueOf(time.getNano());
+        StringBuilder uniqueID = new StringBuilder();
+
+        for (int i = 0; i < 4; i++) {
+            uniqueID.append(nanoStr.charAt(i));
+        }
+
+        return Integer.parseInt(idStartsWith + String.valueOf(uniqueID));
     }
 }

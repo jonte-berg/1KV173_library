@@ -39,7 +39,7 @@ public class MainRun {
                     break;
 
                 case 5:
-                    addLoan(); // Ej klar
+                    addLoan(); // Ej klar Dennis
                     break;
 
                 case 6:
@@ -232,17 +232,37 @@ public class MainRun {
 
     }
 
-public static void addLoan() {
+    public static void addLoan() {
     Scanner input = new Scanner(System.in);
     LoanService service = new LoanService();
     LoanManager loanManager = new LoanManager(service);
+    MemberService membService = new MemberService();
+    MemberManager memberManager = new MemberManager(membService);
     List<Book> listOfBooks = new ArrayList<>();
     boolean endLoop = false;
 
     System.out.println("\n(5) - Add Loan. \n==========================");
+    System.out.print("Enter member id (5 digits): ");
+    int membersID = input.nextInt();
+
+    do {
+        if (memberManager.searchForMember(membersID)) {
+            System.out.println("\nYES - The member id \"" + membersID + "\" exists.");
+            endLoop = true;
+
+        } else {
+            System.out.println("NO - The member id \"" + membersID + "\" do NOT exist.");
+            System.out.print("Try again (0 to exit): ");
+            membersID = input.nextInt();
+
+            if (membersID == 0) {
+                endLoop = true;
+            }
+        }
+    } while (endLoop == false);
 }
 
-public static void deleteLoan(){
+    public static void deleteLoan(){
 
     Scanner input = new Scanner(System.in);
     LoanService service = new LoanService();

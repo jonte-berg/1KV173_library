@@ -17,7 +17,6 @@ public class LoanManager implements ILoanManager {
     public LoanManager() {
     }
 
-
     @Override
     public boolean searchForBookISBN(int isbnNr) {
         Book theBook = service.getBookById(isbnNr);
@@ -30,8 +29,6 @@ public class LoanManager implements ILoanManager {
 
     }
 
-
-
     @Override
     public boolean searchForBookTitle(String title) {
 
@@ -43,8 +40,6 @@ public class LoanManager implements ILoanManager {
             return false;
         }
     }
-
-
 
     @Override
     public boolean addLoan(int membersID, List<Integer> books) throws SQLException {
@@ -67,8 +62,6 @@ public class LoanManager implements ILoanManager {
         //Samt att members maxLoan inte överskrids (kanske sker i vår main?).
     }
 
-
-
     @Override
     public boolean deleteLoan(int loanID) {
 
@@ -76,10 +69,4 @@ public class LoanManager implements ILoanManager {
 
 
     }
-
-
-
-
-
-
 }

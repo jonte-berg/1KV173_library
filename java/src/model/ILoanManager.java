@@ -4,15 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ILoanManager {
-    /*
-+ searchForBook(String) : boolean
-+ addLoan(int, List<Book>) :  boolean
-+ deleteLoan(int) : boolean
-+ loanItems() (vad tänkte vi här?)
-+ issueFine() : void
-    */
-
-
 
     /*
     Search for a book in the database with the help of the ISBN number.
@@ -21,9 +12,6 @@ public interface ILoanManager {
      */
 
     boolean searchForBookISBN(int isbnNr);
-
-
-
 
         /*
     Search for a book in the database with the help of the Title.
@@ -34,9 +22,6 @@ public interface ILoanManager {
 
     boolean searchForBookTitle(String title);
 
-
-
-
     /*
     Adds a loan to a specific member containing a List of books.
     @para membersID
@@ -46,11 +31,8 @@ public interface ILoanManager {
 
     boolean addLoan(int membersID, List<Integer> books) throws SQLException;
 
-
-
-
     /*
-    Delete a loan with a specifik loanID.
+    Delete a loan with a specific loanID.
     1. Update books.
     2. Update member.
     3. If loan is overdue -> issueFine() -> getWarnings ->
@@ -61,11 +43,5 @@ public interface ILoanManager {
     */
 
     boolean deleteLoan(int loanID);
-
-
-
-
-
-
 
 }

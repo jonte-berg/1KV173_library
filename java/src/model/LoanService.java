@@ -40,8 +40,6 @@ public class LoanService implements ILoanService {
         return theBook;
     }
 
-
-
     @Override
     public Book getBookByTitle(String title) {
         Book theBook = null;
@@ -76,10 +74,6 @@ public class LoanService implements ILoanService {
 
         return theBook;
     }
-
-
-
-
 
     @Override
     public ArrayList<Book> getAllBooks() {
@@ -116,10 +110,6 @@ public class LoanService implements ILoanService {
         return allBooksInDB;
     }
 
-
-
-
-
     @Override
     public ArrayList<Loan> getAllLoans(LocalDate startDate, LocalDate endDate) {
         ArrayList<Loan> allLoan = new ArrayList<>();
@@ -152,10 +142,6 @@ public class LoanService implements ILoanService {
         }
         return allLoan;
     }
-
-
-
-
 
     @Override
     public ArrayList<Loan> getLoanByMember(int membersID) throws SQLException {
@@ -194,13 +180,7 @@ public class LoanService implements ILoanService {
         return membersLoan;
     }
 
-
-
-
-
-
     @Override
-
     public boolean addLoan(Loan loan){
 
         loadDrivers();
@@ -328,8 +308,6 @@ public class LoanService implements ILoanService {
 
         return true;
     }
-
-
 
     public boolean issueFine(int  memberID){
 
@@ -477,8 +455,6 @@ public class LoanService implements ILoanService {
         return false;
     }
 
-
-
     public boolean updateDB(int loanID){
 
         loadDrivers();
@@ -525,7 +501,6 @@ public class LoanService implements ILoanService {
 
         return false;
     }
-
 
     public static void loadDrivers() {
         try {     //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)

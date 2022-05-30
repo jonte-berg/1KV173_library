@@ -11,6 +11,7 @@ public class Member {
     int suspended;
     int maxLoans;
     int warnings;
+    int currentLoan; //only getters and setters
 
     public Member() {
     }
@@ -88,6 +89,14 @@ public class Member {
 
     public void setWarnings(int warnings) {
         this.warnings = warnings;
+    }
+
+    public int getCurrentLoan() {
+        return currentLoan;
+    }
+
+    public void setCurrentLoan(int currentLoan) {
+        this.currentLoan = currentLoan;
     }
 
     @Override

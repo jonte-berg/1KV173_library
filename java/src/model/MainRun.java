@@ -3,6 +3,7 @@ package model;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class MainRun {
@@ -151,12 +152,18 @@ public class MainRun {
            System.out.print("Enter member id (5 digits): ");
           int membersID = input.nextInt();
 
-
+       Member theMember = memberManager.searchForMemberInfo(membersID);
 
           //Frågar efter member id tills man hittat ett som finns eller att användaren väljer att avsluta.
        do {
-           if (memberManager.searchForMember(membersID)) {
+           if (theMember != null) {
                System.out.println("\nYES - The member id \"" + membersID + "\" exists.");
+               System.out.println("MemberID: " + theMember.getId());
+               System.out.println("Name: " + theMember.getsName() + " "+ theMember.getlName());
+               System.out.println("Maxloans: " + theMember.getMaxLoans());
+               System.out.println("Currentloans: " + theMember.getCurrentLoan());
+
+
                endLoop = true;
 
            } else {
@@ -202,7 +209,7 @@ public class MainRun {
             }
 
             //titel finns
-            else if (title != "" && loanManager.searchForBookTitle(title) ) {
+            else if (!title.equals("") && loanManager.searchForBookTitle(title) ) {
                 System.out.println("\nYES - The book \"" + title + "\" is available.");
                 endLoop = true;
             }

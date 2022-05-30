@@ -28,6 +28,7 @@ public interface IMemberManager {
 
     boolean searchForMember(int memberID);
 
+    Member searchForMemberInfo(int memberID);
 
 
 }

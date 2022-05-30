@@ -2,6 +2,7 @@ package model;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MemberService implements IMemberService {
 
@@ -119,6 +120,38 @@ public class MemberService implements IMemberService {
         }
         return false;
     }
+
+
+
+    public int getCurrentLoans(int memberID) {
+        String query = "SELECT COUNT(*) AS num FROM hasbook WHERE loanid LIKE '" + memberID +"%'";
+        int numOfBooks = 0;
+
+        loadDrivers();
+
+        try (Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://library-1ik173.mysql.database.azure.com:3306/library1ik173?useSSL=true",
+                "gruppD",
+                "Q1w2e3r4t5")) {
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while(result.next()) {
+                numOfBooks = result.getInt("num");
+            }
+
+        } catch (SQLException ex) {
+
+            System.out.println("Something went wrong...");
+        }
+
+        return numOfBooks;
+    }
+
+
+
+
 
     public static void loadDrivers() {
         try {                                                                           //Läser in drivrutinerna (behövs egentligen inte då det sker automatiskt, men kan vara bra att få ett tecken på att de är laddade)

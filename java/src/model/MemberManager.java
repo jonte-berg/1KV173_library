@@ -58,4 +58,25 @@ public class MemberManager implements IMemberManager {
     }
 
 
+
+
+
+    @Override
+    public Member searchForMemberInfo(int memberID) {
+
+        ArrayList<Member> allMembers = service.getAllMembers();
+        Member theMember;
+
+        for (Member m : allMembers) {
+            if (m.getId() == memberID) {
+                theMember = new Member(m.getId(), m.getsName(), m.getlName(), m.isSuspended(), m.getMaxLoans(), m.getWarnings());
+                theMember.setCurrentLoan(service.getCurrentLoans(memberID));
+                return theMember;
+            }
+        }
+        return theMember = null;
+    }
+
+
+
 }

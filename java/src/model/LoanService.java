@@ -116,7 +116,7 @@ public class LoanService implements ILoanService {
     }
 
     @Override
-    public ArrayList<Loan> getAllLoans(LocalDate startDate, LocalDate endDate) {
+    public ArrayList<Loan> getAllLoans() {
         ArrayList<Loan> allLoan = new ArrayList<>();
         String query = "SELECT * FROM hasloan, loan";
 
@@ -323,14 +323,19 @@ public class LoanService implements ILoanService {
                 "gruppD",
                 "Q1w2e3r4t5")) {
 
-           Statement statement = conn.createStatement();
-           ResultSet result = statement.executeQuery("Select total_Warnings FROM member where memberID="+memberID);
            int warnings=0;
+           Statement statement = conn.createStatement();
+           ResultSet result = statement.executeQuery("Select total_Warnings AS TW FROM member where memberID="+memberID);
 
-           while(result.next()){
-                warnings = result.getInt(1);
+            while (result.next()){
+                warnings = result.getInt("TW");
+                System.out.println(warnings);
             }
-            result= null;
+
+
+
+
+           //result= null;
            warnings++;
            PreparedStatement ps;
 
@@ -412,16 +417,15 @@ public class LoanService implements ILoanService {
             //vi hämtar memberID som är associerad med det angivna loanID, so far so good
             ResultSet result = statement.executeQuery("SELECT memberID FROM hasLoan WHERE loanID="+loanID);
 
-                 if (result.next()==false)
-                     return false;
+
 
             while(result.next()){
-                     loanMember=result.getInt(1);
-                     System.out.println((result.getInt(1)));
+                     loanMember=result.getInt("memberID");
 
                  }
-                 //vi hämtar book_isbn som ör associerad med det angivna loanID, so far so good -------KAN DET BLI MER än 1 result?!
+
             result=null;
+            //vi hämtar book_isbn som ör associerad med det angivna loanID, so far so good -------KAN DET BLI MER än 1 result?!
             result=statement.executeQuery("Select book_ISBN FROM hasBook WHERE loanID="+loanID);
 
             while(result.next()){
@@ -438,15 +442,19 @@ public class LoanService implements ILoanService {
             while(result.next()){
                d1= result.getDate("endDate").toLocalDate();
                 System.out.println(result.getDate("endDate").toLocalDate());
-            }
 
-            if (!(d1.isAfter(LocalDate.now())))
-                if(issueFine(loanMember))
-                    if(updateDB(loanID)){
-                        for (int i=0;i<bookID.size();i++)
-                        updateBook(bookID.get(i),1);
+            }
+            //remove/add ! to make it work as it should/for testing ( it reverse fines now)
+            if ((d1.isAfter(LocalDate.now()))) {
+                System.out.println("TEST, KOMMER VI IN HIT?");
+                if (issueFine(loanMember))
+                    if (updateDB(loanID)) {
+                        for (int i = 0; i < bookID.size(); i++)
+                            updateBook(bookID.get(i), 1);
                     }
-            if(updateDB(loanID)) {
+            }if(updateDB(loanID)) {
+                //smutsig kod
+                issueFine(loanMember);
                 for (int i = 0; i < bookID.size(); i++)
                     updateBook(bookID.get(i), 1);
             }

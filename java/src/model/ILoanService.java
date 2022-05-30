@@ -42,7 +42,7 @@ public interface ILoanService {
     @return ArrayList<Loan>
      */
 
-    ArrayList<Loan> getAllLoans(LocalDate startDate, LocalDate endDate);
+    ArrayList<Loan> getAllLoans();
 
     /*
     Get all loan that belongs to a specific member.
@@ -67,5 +67,7 @@ public interface ILoanService {
      */
 
     boolean deleteLoan(int loanID);
+
+
 
 }

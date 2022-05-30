@@ -202,7 +202,7 @@ public class LoanService implements ILoanService {
             int result = addLoan.executeUpdate();
 
             //if successfull
-            if (result>0) {
+            if (result>0&&loan.getBooks().size()>0) {
                 System.out.println("Loan inserted successfully");
 
                 //preppa statement till hasLoan table

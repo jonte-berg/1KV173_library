@@ -48,11 +48,15 @@ public class MainRun {
                     deleteLoan();
                     break;
 
+                case 7:
+                    System.out.println("Goodbye!");
+                    break;
+
                     default:
-                        System.out.println("Goodbye!");
+                        System.out.println("Please us the given numbers to navigate!");
             }
 
-        } while (option < 7 && option > 0);
+        } while (option != 7 && option > 0);
 
     }
 
@@ -261,28 +265,18 @@ public class MainRun {
             if (memberManager.searchForMember(membersID)) {
 
 
-                System.out.println("Enter Book ISBN (6 Digits) (0 to exit): ");
+                System.out.println("Enter Book ISBN (6 Digits) to continue adding books to loan (0 if finished, to create loan/exit): ");
                 int isbnNr = input.nextInt();
 
-
-                if (isbnNr == 0) {
-                    return;
-                }
+                if (isbnNr == 0)
+                    endLoop = true;
 
                 if (isbnNr != 0 && loanManager.searchForBookISBN(isbnNr)) {
-                    System.out.println("Book was added!\n Enter Book ISBN (6 Digits) (0 to create loan):");
                     listOfBooks.add(isbnNr);
+                    System.out.println("Book was added!\n");
 
-
-                } else
-                    System.out.println("The book ISBN does not exist, try again (0 to exit): ");
-                    isbnNr = input.nextInt();
-                    listOfBooks.add(isbnNr);
-
-                if (isbnNr == 0) {
-                    endLoop = true;
-                }
-
+                } else if(isbnNr!=0)
+                    System.out.println("The book ISBN does not exist, try again");
 
             } else {
 
@@ -299,12 +293,13 @@ public class MainRun {
 
         } while (endLoop == false);
 
-        if(loanManager.addLoan(membersID,listOfBooks)) {
+
+        if(loanManager.addLoan(membersID,listOfBooks))
             System.out.println("Loan was added!");
-        }
-        else {
+
+        else
             System.out.println("Loan failed to be added!");
-        }
+
     }
 
 

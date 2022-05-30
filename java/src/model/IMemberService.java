@@ -6,7 +6,7 @@
 package model;
 
 
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 
 public interface IMemberService {

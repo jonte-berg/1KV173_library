@@ -1,6 +1,11 @@
+/*      Kurs: 1IK173
+        Projekt
+        Kursdeltagare: Dennis Schill, Robin Sjöberg, Jonathan Berg, Konstantinos Karidas
+        Termin och datum: VT22 30/5   */
+
 package model;
 
-import java.time.LocalDate;
+
 
 public interface IMemberManager {
 

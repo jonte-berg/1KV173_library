@@ -1,3 +1,9 @@
+/*      Kurs: 1IK173
+        Projekt
+        Kursdeltagare: Dennis Schill, Robin Sjöberg, Jonathan Berg, Konstantinos Karidas
+        Termin och datum: VT22 30/5   */
+
+
 CREATE TABLE Member (
 memberID INT PRIMARY KEY,
 sName VARCHAR(45),

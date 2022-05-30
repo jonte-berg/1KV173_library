@@ -1,10 +1,14 @@
+/*      Kurs: 1IK173
+        Projekt
+        Kursdeltagare: Dennis Schill, Robin Sjöberg, Jonathan Berg, Konstantinos Karidas
+        Termin och datum: VT22 30/5   */
+
 package model;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class MainRun {

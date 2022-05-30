@@ -5,12 +5,12 @@
 
 package model;
 
-import net.bytebuddy.asm.Advice;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 /*Här har vi en MainTest som vi kan göra olika tester för att visa/förklara saker på.*/
 

@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 
 public class MainRun {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         //Variabler
         Scanner input = new Scanner(System.in);
@@ -239,35 +240,75 @@ public class MainRun {
 
     }
 
-    public static void addLoan() {
-    Scanner input = new Scanner(System.in);
-    LoanService service = new LoanService();
-    LoanManager loanManager = new LoanManager(service);
-    MemberService membService = new MemberService();
-    MemberManager memberManager = new MemberManager(membService);
-    List<Book> listOfBooks = new ArrayList<>();
-    boolean endLoop = false;
+    public static void addLoan() throws SQLException {
 
-    System.out.println("\n(5) - Add Loan. \n==========================");
-    System.out.print("Enter member id (5 digits): ");
-    int membersID = input.nextInt();
+        Scanner input = new Scanner(System.in);
+        LoanService service = new LoanService();
+        LoanManager loanManager = new LoanManager(service);
+        MemberService membService = new MemberService();
+        MemberManager memberManager = new MemberManager(membService);
+        List<Integer> listOfBooks = new ArrayList<>();
+        boolean endLoop = false;
 
-    do {
-        if (memberManager.searchForMember(membersID)) {
-            System.out.println("\nYES - The member id \"" + membersID + "\" exists.");
-            endLoop = true;
 
-        } else {
-            System.out.println("NO - The member id \"" + membersID + "\" do NOT exist.");
-            System.out.print("Try again (0 to exit): ");
-            membersID = input.nextInt();
+        System.out.println("\n(5) - Add Loan. \n==========================");
+        System.out.print("Enter member id (5 digits): ");
+        int membersID = input.nextInt();
 
-            if (membersID == 0) {
-                endLoop = true;
+
+        do {
+
+            if (memberManager.searchForMember(membersID)) {
+
+
+                System.out.println("Enter Book ISBN (6 Digits) (0 to exit): ");
+                int isbnNr = input.nextInt();
+
+
+                if (isbnNr == 0) {
+                    return;
+                }
+
+                if (isbnNr != 0 && loanManager.searchForBookISBN(isbnNr)) {
+                    System.out.println("Book was added!\n Enter Book ISBN (6 Digits) (0 to create loan):");
+                    listOfBooks.add(isbnNr);
+
+
+                } else
+                    System.out.println("The book ISBN does not exist, try again (0 to exit): ");
+                    isbnNr = input.nextInt();
+                    listOfBooks.add(isbnNr);
+
+                if (isbnNr == 0) {
+                    endLoop = true;
+                }
+
+
+            } else {
+
+                System.out.println("NO - The member id \"" + membersID + "\" do NOT exist.");
+                System.out.print("Try again (0 to exit): ");
+                membersID = input.nextInt();
+
+                if (membersID == 0) {
+                    endLoop = true;
+                }
+
             }
+
+
+        } while (endLoop == false);
+
+        if(loanManager.addLoan(membersID,listOfBooks)) {
+            System.out.println("Loan was added!");
         }
-    } while (endLoop == false);
-}
+        else {
+            System.out.println("Loan failed to be added!");
+        }
+    }
+
+
+
 
     public static void deleteLoan(){
 
